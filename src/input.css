@@ -1,0 +1,82 @@
+/* Entrada de Tailwind. Se compila a css/app.css (ver README / build.sh). */
+@import "tailwindcss";
+@import "./tokens.css";
+
+/* Las demos embebidas no deben generar clases */
+@source not "../demos";
+@source not "../tools";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem; /* compensa el header fijo */
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-crema font-sans text-base text-carbon antialiased;
+    line-height: var(--leading-lectura);
+    font-feature-settings: "cv11", "ss01";
+  }
+  h1, h2, h3 {
+    @apply font-display font-bold text-balance;
+    letter-spacing: var(--tracking-titular);
+    line-height: var(--leading-titular);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-amarillo);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Botón principal: coral con texto carbón (5.8:1). Blanco sobre coral no pasa AA. */
+  .btn-cta {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-pastilla bg-coral px-6 py-3
+      font-display text-base font-bold text-carbon shadow-cta
+      transition-[transform,box-shadow,background-color] duration-300 ease-premium
+      hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98];
+  }
+  .btn-cta:hover { box-shadow: var(--shadow-cta-hover); }
+
+  /* Superficie de vidrio sobre fondos oscuros */
+  .vidrio-oscuro {
+    @apply border border-blanco/10 bg-carbon/70 backdrop-blur-xl backdrop-saturate-150;
+  }
+
+  /* Malla de color (mesh gradient) sobre carbón */
+  .malla-carbon {
+    background-color: var(--color-carbon-hondo);
+    background-image:
+      radial-gradient(60% 50% at 85% 0%, color-mix(in srgb, var(--color-coral) 22%, transparent), transparent 70%),
+      radial-gradient(40% 40% at 0% 100%, color-mix(in srgb, var(--color-amarillo) 12%, transparent), transparent 70%),
+      radial-gradient(50% 60% at 50% 50%, color-mix(in srgb, var(--color-verde) 8%, transparent), transparent 70%);
+  }
+
+  /* Navegación */
+  .nav-enlace {
+    @apply relative inline-flex min-h-11 items-center rounded-pastilla px-4 text-[0.9375rem] font-medium text-gris-claro
+      transition-colors duration-300 ease-premium hover:bg-blanco/5 hover:text-blanco;
+  }
+  .nav-enlace-movil {
+    @apply flex min-h-14 items-center justify-between rounded-2xl px-4 font-display text-xl font-bold text-blanco
+      transition-colors duration-300 ease-premium hover:bg-blanco/5;
+  }
+  .nav-enlace-movil span { @apply font-sans text-sm font-medium text-gris-claro; }
+  .pie-enlace {
+    @apply inline-flex min-h-11 items-center text-blanco underline decoration-blanco/20 underline-offset-4
+      transition-colors duration-300 ease-premium hover:decoration-coral;
+  }
+
+  .etiqueta {
+    @apply font-display text-xs font-bold uppercase;
+    letter-spacing: var(--tracking-etiqueta);
+  }
+}

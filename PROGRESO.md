@@ -3,8 +3,9 @@
 ## Estado
 | Sprint | Estado | Fecha |
 |---|---|---|
-| 0 — Reconocimiento y diagnóstico | ✅ Terminado, **esperando revisión** | 2026-10-22 |
-| 1 — Base e identidad visual | ⏳ Pendiente | |
+| 0 — Reconocimiento y diagnóstico | ✅ Aprobado | 2026-10-22 |
+| 1 — Base e identidad visual | ✅ Terminado, **esperando revisión** | 2026-10-22 |
+| 2 — Hero y problema | ⏳ Pendiente | |
 
 ---
 
@@ -175,10 +176,47 @@ servicios_web/
 15. **Intento anterior** (`servicios_web/index.html`): ¿lo borro o lo muevo a `_descartado/`? Por ahora no se toca y queda fuera de git.
 16. **Menu_Galeria** tiene el menú Pro solo como cambios sin commitear. ¿Quieres hacer un commit en ese repo para no perderlo? (Yo no lo modifico.)
 
+### Respuestas del humano (2026-10-22)
+- Se aprueban todas las preguntas abiertas con "sí": marca **menuFast**; WhatsApp **573044168961** e Instagram **@davidvar2014**; Tailwind con CLI standalone; copias de las demos con imágenes optimizadas; fotos libres o generadas con IA para lo que falte; paleta del docx con estética premium y mezcla de secciones oscuras y claras; pasos de contratación propuestos; plan Pro como "Recomendado".
+- El `index.html` del intento anterior se **borró**.
+- Logo: el humano entregó `Logo.png` (transparente, 669×373, la palabra mide ~450 px). Ver Sprint 1.
+- Siguen pendientes: tiempos de entrega, mantenimiento, dominio, analítica, testimonios y correo.
+
 ### Verificación Sprint 0
 - [x] PROGRESO.md existe y lista todos los archivos de instrucciones leídos.
 - [x] Cada menú demo está identificado con su plan y su ruta de entrada.
 - [x] Hay una lista de preguntas abiertas para el humano.
 - [x] No se ha escrito código de la web todavía.
 
->>> PAUSA: esperando aprobación para iniciar el Sprint 1.
+>>> Aprobado.
+
+---
+
+## SPRINT 1 — Base del proyecto e identidad visual
+
+### Qué se hizo
+- **Estructura**: `index.html`, `src/tokens.css`, `src/input.css`, `css/app.css` (generado), `js/config.js`, `js/main.js`, `assets/logo/`, `assets/img/`, `build.sh`, `tools/` (fuera de git: Tailwind CLI y página de prueba de anchos).
+- **Tailwind CSS v4.3.3** con el ejecutable standalone (sin npm). `./build.sh` compila y `./build.sh --watch` recompila al guardar. En `tokens.css` se borra la paleta por defecto de Tailwind (`--color-*: initial`), así que **solo existen los colores de la marca**: no se puede usar otro color aunque se quiera.
+- **Tokens**: paleta del docx + `coral-texto` (#C2361A), `gris` y `gris-claro` para texto secundario, `carbon-hondo` para la malla; Space Grotesk + Inter; curvas `ease-premium` y `ease-rebote`; sombras multicapa; radios.
+- **Logo**: el `Logo.png` entregado es transparente pero pequeño y se ve borroso al ampliarlo. Se usa un recorte del `Logo.jpg` de 2752 px, al que se le quitó el cuadriculado por color: es el mismo diseño y queda más nítido. Hay versiones `menufast-logo-claro` (para fondo oscuro) y `menufast-logo-oscuro` ("menu" en carbón, para fondos claros), en PNG y WebP, más el isotipo para favicon (48 px) y apple-touch-icon (180 px). El PNG entregado queda en `assets/logo/original/`.
+- **config.js**: marca, contacto, mensajes de WhatsApp, titulares (incluidos los de la prueba A/B), planes, condiciones, pasos, tipos de negocio, URL pública, analítica y testimonios. Los datos faltantes están marcados con `TODO:`.
+- **Header**: pastilla flotante de vidrio (desenfoque + borde de 1 px con baja opacidad + sombra multicapa) que se oscurece al hacer scroll. Navegación desde 1024 px (Inicio, Demo, Planes, Preguntas); CTA "Quiero mi menú digital" desde 640 px; menú hamburguesa con `aria-expanded`, cierre con Escape y foco en el primer enlace. Incluye enlace "Saltar al contenido".
+- **Footer**: malla de color sobre carbón; logo; enlaces; tarjeta de WhatsApp (acento verde) con el número formateado desde config; Instagram; correo (se oculta si está vacío); año dinámico; marca de agua "menuFast" decorativa con contorno.
+- **Utilidad de WhatsApp** (`menuFastUtil.enlaceWhatsApp({tipo, plan})`): todo elemento con `data-wa` (más `data-wa-tipo` y `data-wa-plan` opcionales) recibe su enlace al cargar.
+- Las secciones `#inicio`, `#problema`, `#demo`, `#planes` y `#preguntas` existen como esqueleto para los sprints siguientes.
+
+### Decisiones
+- **Botones coral con texto carbón** (contraste 5,78:1). Blanco sobre coral da **3,1:1 y no cumple AA**.
+- Texto coral sobre fondo claro → `coral-texto` #C2361A (5,47 en blanco y 4,86 en crema).
+- `theme-color` se toma del token `--color-carbon` por JS, para no escribir colores en el HTML.
+- Sin tipo de negocio, el mensaje de WhatsApp usa la variante sin "[tipo de comida]".
+
+### Verificación Sprint 1
+- [x] `index.html` abre sin errores ni advertencias en consola y los 7 recursos cargan sin 4xx (Chrome, servidor local).
+- [x] No hay colores escritos a mano fuera de `tokens.css` (búsqueda de hex, rgb y hsl en html, js e input.css: 0 resultados). El CSS compilado solo contiene los 8 hex de la paleta.
+- [x] Header y footer revisados en **360, 768 y 1280 px** con iframes de ancho exacto, sin scroll horizontal. Se corrigió que el número se partía en 768 px y que el panel móvil era demasiado transparente.
+- [x] El enlace de WhatsApp sale de `config.js`: los 3 botones, el número del footer y el Instagram se generan desde `contacto`. Probado `enlaceWhatsApp({tipo:'Pizzería', plan:'Menú Pro'})` → mensaje correcto.
+- [x] Contraste ≥ 4,5:1 en todas las combinaciones usadas (coral/carbón 5,78 · gris-claro/carbón 8,51 · gris/crema 6,27 · amarillo/carbón 11,65 · blanco/verde 5,25).
+- [x] Áreas táctiles de 44 px o más en todos los enlaces y botones visibles (el del logo se subió de 36 a 44 px).
+
+>>> PAUSA: esperando revisión para iniciar el Sprint 2.
