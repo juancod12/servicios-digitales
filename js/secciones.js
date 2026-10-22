@@ -135,8 +135,69 @@
         .join('');
   };
 
+  /* ---------- Preguntas frecuentes ---------- */
+  const pintarPreguntas = () => {
+    const $lista = $('preguntas-lista');
+    if (!$lista) return;
+    $lista.innerHTML = CFG.preguntas
+      .filter((q) => !pendiente(q.respuesta))
+      .map(
+        (q) => `
+      <details class="pregunta group" name="faq" data-animar>
+        <summary class="pregunta__titulo">
+          <span>${escapar(q.pregunta)}</span>
+          <span class="pregunta__icono" aria-hidden="true"></span>
+        </summary>
+        <p class="px-6 pb-6 text-gris">${escapar(q.respuesta)}</p>
+      </details>`
+      )
+      .join('');
+  };
+
+  /* ---------- Testimonios (solo si hay reales) ---------- */
+  const pintarTestimonios = () => {
+    const $sec = $('testimonios');
+    const reales = (CFG.testimonios || []).filter((t) => t && t.texto && t.nombre);
+    if (!$sec) return;
+    if (!reales.length) {
+      $sec.remove(); // sin testimonios la sección no existe
+      return;
+    }
+    $sec.hidden = false;
+    $('testimonios-lista').innerHTML = reales
+      .map(
+        (t) => `
+      <li class="rounded-tarjeta border border-carbon/[0.07] bg-crema p-7">
+        <blockquote class="text-lg">“${escapar(t.texto)}”</blockquote>
+        <p class="mt-5 font-display font-bold">${escapar(t.nombre)}${t.negocio ? `<span class="block text-sm font-medium text-gris">${escapar(t.negocio)}</span>` : ''}</p>
+      </li>`
+      )
+      .join('');
+  };
+
+  /* ---------- Cierre: selector de tipo de negocio ---------- */
+  const iniciarCierre = () => {
+    const $sel = $('cierre-tipo');
+    const $btn = $('cierre-boton');
+    if (!$sel || !$btn) return;
+    $sel.insertAdjacentHTML(
+      'beforeend',
+      CFG.tiposNegocio.map((t) => `<option value="${escapar(t.nombre)}">${escapar(t.nombre)}</option>`).join('') +
+        '<option value="otro">Otro tipo de negocio</option>'
+    );
+    $sel.addEventListener('change', () => {
+      const tipo = $sel.value && $sel.value !== 'otro' ? $sel.value : '';
+      if (tipo) $btn.dataset.waTipo = tipo;
+      else delete $btn.dataset.waTipo;
+      $btn.href = util.enlaceWhatsApp({ tipo });
+    });
+  };
+
   pintarEjemplos();
   pintarPlanes();
+  pintarPreguntas();
+  pintarTestimonios();
+  iniciarCierre();
   pintarCondiciones();
   pintarTabla();
   util.pintarEnlacesWhatsApp();

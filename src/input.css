@@ -183,6 +183,34 @@
     background-color: var(--color-carbon-hondo);
   }
 
+  /* Confianza */
+  .punto-confianza {
+    @apply flex gap-4 rounded-tarjeta border border-verde/15 bg-blanco p-5 text-gris;
+  }
+  .punto-confianza strong { @apply text-carbon; }
+  .icono-confianza {
+    @apply grid size-11 shrink-0 place-items-center rounded-2xl bg-verde/10 text-verde;
+  }
+  .icono-confianza svg { @apply size-5; }
+
+  /* Acordeón de preguntas */
+  .pregunta {
+    @apply rounded-tarjeta border border-carbon/[0.07] bg-blanco transition-shadow duration-300 ease-premium open:shadow-capa;
+  }
+  .pregunta__titulo {
+    @apply flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 rounded-tarjeta px-6 py-4 font-display text-lg font-bold;
+  }
+  .pregunta__titulo::-webkit-details-marker { display: none; }
+  .pregunta__icono {
+    @apply relative grid size-9 shrink-0 place-items-center rounded-pastilla bg-crema transition-[transform,background-color] duration-300 ease-premium
+      group-open:rotate-45 group-open:bg-coral;
+  }
+  .pregunta__icono::before, .pregunta__icono::after {
+    content: "";
+    @apply absolute h-0.5 w-3.5 rounded-pastilla bg-carbon;
+  }
+  .pregunta__icono::after { @apply rotate-90; }
+
   /* Navegación */
   .nav-enlace {
     @apply relative inline-flex min-h-11 items-center rounded-pastilla px-4 text-[0.9375rem] font-medium text-gris-claro

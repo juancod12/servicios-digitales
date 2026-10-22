@@ -141,6 +141,51 @@ window.MENUFAST = {
     { nombre: 'Comidas y bebidas', imagen: 'comidas-y-bebidas', descripcion: 'Platos, cócteles y bebidas en un mismo menú, con categorías separadas.' },
   ],
 
+  // Preguntas frecuentes. Solo información real: las respuestas que empiezan por
+  // "TODO:" NO se muestran en la web hasta que se completen.
+  preguntas: [
+    {
+      pregunta: '¿Mis clientes necesitan instalar una aplicación?',
+      respuesta: 'No. Tu menú se abre en el navegador del celular: tus clientes solo escanean el código QR o abren el enlace.',
+    },
+    {
+      pregunta: '¿Cómo ven el menú mis clientes?',
+      respuesta: 'Escanean el código QR con la cámara del celular o abren el enlace. Ahí ven tus categorías, las fotos de tus productos y sus precios, y pueden armar una cuenta estimada con el carrito.',
+    },
+    {
+      pregunta: '¿Puedo cambiar los precios después?',
+      respuesta: 'Con el plan Pro + Panel Admin tú mismo agregas, editas y eliminas productos y precios desde el panel, cuando quieras. Si tienes el Básico o el Pro, escríbenos y te contamos cómo actualizarlo.',
+    },
+    {
+      pregunta: '¿Qué pasa si no tengo fotos de mis productos?',
+      respuesta: 'Con el Menú Básico usamos imágenes descriptivas o generadas con inteligencia artificial. Para el Menú Pro y el Pro + Panel Admin necesitamos las fotos originales de tus productos.',
+    },
+    {
+      pregunta: '¿Es pago único o mensualidad?',
+      respuesta: 'Es pago único: pagas una sola vez por tu menú, sin mensualidades.',
+    },
+    {
+      pregunta: '¿Cuánto tarda la entrega?',
+      respuesta: 'TODO: tiempo de entrega por plan',
+    },
+    {
+      pregunta: '¿Qué incluye el mantenimiento?',
+      respuesta: 'TODO: condiciones de mantenimiento y de cambios después de la entrega',
+    },
+    {
+      pregunta: '¿Puedo pedir funciones extra?',
+      respuesta: 'Sí. Si necesitas gestionar más cosas, como un software de administración, lo cotizamos como un producto aparte y acordamos el precio contigo.',
+    },
+    {
+      pregunta: '¿Puedo usar los colores y el logo de mi negocio?',
+      respuesta: 'Sí. Cada menú se personaliza con tus colores, tu logo y las especificaciones que necesites.',
+    },
+    {
+      pregunta: '¿Funciona en cualquier celular?',
+      respuesta: 'Funciona desde el navegador de celulares Android y iPhone con conexión a internet. También se puede abrir en tabletas y computadores.',
+    },
+  ],
+
   // URL pública del sitio, para los QR de las demos.
   // TODO: completar cuando haya dominio. Vacío = se usa la URL actual.
   urlPublica: '',
@@ -148,6 +193,7 @@ window.MENUFAST = {
   // TODO: herramienta de analítica (GA4 u otra). Ver Sprint 8.
   analitica: { proveedor: '', id: '' },
 
-  // Solo testimonios reales. Vacío = la sección no se muestra.
+  // Solo testimonios REALES. Vacío = la sección no se muestra.
+  // Formato: { nombre: 'Ana', negocio: 'Pizzería La 10, Cali', texto: '...' }
   testimonios: [],
 };

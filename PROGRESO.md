@@ -9,7 +9,8 @@
 | 3 — Demo interactiva | ✅ Aprobado | 2026-10-22 |
 | 4 — Beneficios y ejemplos | ✅ Terminado | 2026-10-22 |
 | 5 — Planes y precios | ✅ Terminado | 2026-10-22 |
-| 6 — Confianza, FAQ y cierre | ⏳ Pendiente | |
+| 6 — Confianza, FAQ y cierre | ✅ Terminado | 2026-10-22 |
+| 7 — Animaciones, responsive y accesibilidad | ⏳ Pendiente | |
 
 ---
 
@@ -330,3 +331,20 @@ servicios_web/
 - [x] Precios iguales al docx: Básico "Desde $100.000", Pro $130.000, Pro + Panel Admin $250.000 (tarjetas y tabla).
 - [x] Los TODO de tiempos y mantenimiento están en la lista de pendientes (ver el resumen final). En la web no se muestran mientras sigan pendientes.
 - [x] La tabla se desplaza dentro de su recuadro en 360 px y la página no tiene scroll horizontal. En 1280 px cabe completa.
+
+---
+
+## SPRINT 6 — Confianza, preguntas frecuentes y cierre
+
+### Qué se hizo
+- **Confianza** (`#preguntas`, fondo crema, **acento verde**): 3 puntos verificables: "Precios claros" (pago único), "Lo pruebas antes de decidir" (las demos) y "Atención directa por WhatsApp".
+- **Preguntas frecuentes** desde `config.preguntas` con `<details name="faq">/<summary>` nativos (acordeón exclusivo y accesible sin JS extra). **Las respuestas que empiezan por "TODO:" no se muestran**: hoy se ocultan "¿Cuánto tarda la entrega?" y "¿Qué incluye el mantenimiento?". Se ven 8 de 10.
+- **Testimonios**: si `config.testimonios` está vacío, la sección **se elimina del DOM**. Para mostrarla basta agregar testimonios reales con el formato del comentario en config.js.
+- **Cierre** (`#contacto`): tarjeta oscura con malla de color y trama de puntos; titular y texto del docx 7.8; selector "Tipo de negocio" (los 8 de config + "Otro") y botón coral **"Solicitar información por WhatsApp"**, que lleva el tipo elegido en el mensaje.
+- **Botón flotante de WhatsApp** (verde, 56 px, respeta el área segura de iPhone): aparece al salir del hero y **se esconde en las zonas que ya tienen botones principales o que podría tapar** (hero, demo, planes, preguntas, cierre y footer). Mientras está oculto lleva `inert`, así que no se puede enfocar ni hacer clic.
+
+### Verificación Sprint 6
+- [x] Acordeón con **teclado real** (Chrome): foco en la 1.ª pregunta → **Enter** la abre → **Tab** pasa a la 2.ª → **Espacio** la abre y cierra la anterior. El foco es visible (contorno amarillo).
+- [x] Con `testimonios: []` la sección **no existe** en el DOM.
+- [x] El botón flotante **no tapa ningún** enlace, botón, select, summary ni iframe: se recorrió toda la página cada 120 px en **360, 768 y 1280 px** → 0 choques. La primera versión chocaba en 1280 con "Ver en pantalla completa" y con el "+" de la última pregunta; se corrigió.
+- [x] Selector del cierre: "Heladería" → "…Mi restaurante es de heladería y me gustaría recibir información".

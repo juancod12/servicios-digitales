@@ -111,9 +111,33 @@
     });
   };
 
+  /* ---------- Botón flotante de WhatsApp ----------
+     Aparece al bajar del hero y se esconde donde ya hay botones principales
+     (hero, demo, planes, preguntas, cierre, footer) para no taparlos. */
+  const iniciarFlotante = () => {
+    const btn = document.getElementById('wa-flotante');
+    if (!btn) return;
+    const zonas = ['inicio', 'demo', 'planes', 'preguntas', 'contacto'].map((id) => document.getElementById(id)).filter(Boolean);
+    const pie = document.querySelector('footer');
+    if (pie) zonas.push(pie);
+    const visibles = new Set();
+    const actualizar = () => {
+      const mostrar = visibles.size === 0;
+      btn.toggleAttribute('data-visible', mostrar);
+      btn.toggleAttribute('inert', !mostrar); // oculto = no enfocable ni clicable
+    };
+    const obs = new IntersectionObserver((entradas) => {
+      entradas.forEach((e) => (e.isIntersecting ? visibles.add(e.target) : visibles.delete(e.target)));
+      actualizar();
+    });
+    zonas.forEach((z) => obs.observe(z));
+    actualizar();
+  };
+
   /* ---------- Inicio ---------- */
   pintarThemeColor();
   pintarContacto();
   pintarEnlacesWhatsApp();
   iniciarHeader();
+  iniciarFlotante();
 })();
