@@ -9,17 +9,19 @@
   <link rel="icon" type="image/png" href="assets/logo/favicon-48.png">
   <link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
+  <link rel="preload" href="assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="stylesheet" href="css/app.css">
 
   <script src="js/config.js" defer></script>
   <script src="js/main.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" defer></script>
   <script src="js/secciones.js" defer></script>
   <script src="js/demo-telefono.js" defer></script>
+  <script src="js/animaciones.js" defer></script>
 </head>
 <body class="min-h-svh overflow-x-clip">
 
@@ -35,8 +37,8 @@
                 group-data-[scroll]/header:bg-carbon/85">
 
       <a href="#inicio" class="flex min-h-11 shrink-0 items-center rounded-pastilla" aria-label="menuFast, ir al inicio">
-        <img src="assets/logo/menufast-logo-claro.webp" alt="menuFast" width="640" height="206"
-             class="h-9 w-auto sm:h-10" fetchpriority="high">
+        <img src="assets/logo/menufast-logo-claro-320.webp" alt="menuFast" width="320" height="103"
+             class="h-9 w-auto sm:h-10">
       </a>
 
       <nav aria-label="Principal" class="hidden lg:block">
@@ -129,7 +131,7 @@
                  srcset="assets/img/hero-hamburguesa-480.webp 480w, assets/img/hero-hamburguesa-800.webp 800w, assets/img/hero-hamburguesa-1200.webp 1200w"
                  sizes="(min-width: 1024px) 360px, 70vw"
                  width="800" height="1000" alt="Hamburguesa de pollo apanado con queso, lechuga y tomate, acompañada de papas fritas"
-                 class="aspect-[4/5] w-full object-cover" fetchpriority="high" decoding="async">
+                 class="aspect-[4/5] w-full object-cover" decoding="async">
             <div class="absolute inset-0 bg-gradient-to-t from-carbon-hondo/60 via-transparent to-transparent" aria-hidden="true"></div>
           </div>
 
@@ -161,7 +163,7 @@
     <section id="problema" aria-labelledby="problema-titulo" class="bg-crema px-4 py-24 sm:px-6 lg:py-32">
       <div class="mx-auto grid max-w-6xl gap-12 lg:grid-cols-12 lg:gap-8">
 
-        <div class="lg:sticky lg:top-32 lg:col-span-5 lg:self-start">
+        <div class="lg:sticky lg:top-32 lg:col-span-5 lg:self-start" data-animar>
           <p class="etiqueta text-coral-texto">Tu carta, hoy</p>
           <h2 id="problema-titulo" class="mt-4 text-3xl sm:text-[2.75rem]">
             Tu carta es una parte importante de la experiencia de tus clientes
@@ -173,7 +175,7 @@
         </div>
 
         <ul class="grid gap-4 sm:grid-cols-2 lg:col-span-7 lg:gap-5">
-          <li class="tarjeta-problema">
+          <li data-animar class="tarjeta-problema">
             <div class="vineta" aria-hidden="true">
               <span class="font-display text-sm font-bold text-gris">Carta</span>
               <span class="mt-2 block h-1.5 w-4/5 rounded-pastilla bg-carbon/10"></span>
@@ -185,7 +187,7 @@
             <p class="mt-2 text-gris">Llega un plato nuevo, otro se deja de preparar… y la carta sigue igual que el día que se imprimió.</p>
           </li>
 
-          <li class="tarjeta-problema sm:translate-y-10">
+          <li data-animar class="tarjeta-problema sm:translate-y-10">
             <div class="vineta flex items-center justify-center gap-3" aria-hidden="true">
               <span class="font-display text-lg font-bold text-gris line-through decoration-coral decoration-2">$18.000</span>
               <span class="-rotate-6 font-display text-2xl font-bold italic text-coral-texto">$21.000</span>
@@ -194,7 +196,7 @@
             <p class="mt-2 text-gris">Tachar y escribir encima resuelve el momento, pero la carta pierde orden y claridad.</p>
           </li>
 
-          <li class="tarjeta-problema">
+          <li data-animar class="tarjeta-problema">
             <div class="vineta flex items-center gap-3" aria-hidden="true">
               <span class="grid size-14 shrink-0 place-items-center rounded-xl border-2 border-dashed border-carbon/20 font-display text-2xl font-bold text-gris">?</span>
               <span class="grow">
@@ -207,7 +209,7 @@
             <p class="mt-2 text-gris">Un nombre en una lista no muestra cómo llega a la mesa. El cliente pregunta, duda o pide lo de siempre.</p>
           </li>
 
-          <li class="tarjeta-problema sm:translate-y-10">
+          <li data-animar class="tarjeta-problema sm:translate-y-10">
             <div class="vineta relative flex items-end justify-center" aria-hidden="true">
               <span class="absolute bottom-4 h-14 w-20 -translate-x-3 -rotate-6 rounded-lg border border-carbon/10 bg-blanco"></span>
               <span class="absolute bottom-4 h-14 w-20 translate-x-3 rotate-3 rounded-lg border border-carbon/10 bg-blanco"></span>
@@ -224,7 +226,7 @@
     <section id="demo" aria-labelledby="demo-titulo" class="malla-carbon relative isolate overflow-hidden px-4 py-24 text-blanco sm:px-6 lg:py-32">
       <div class="mx-auto max-w-6xl">
 
-        <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
+        <div class="grid gap-6 lg:grid-cols-12 lg:items-end" data-animar>
           <div class="lg:col-span-7">
             <p class="etiqueta inline-flex items-center gap-2 text-amarillo">
               <span class="relative flex size-2" aria-hidden="true">
@@ -430,7 +432,7 @@
         <!-- Tabla comparativa -->
         <div class="mt-24" data-animar>
           <h3 class="text-center text-2xl sm:text-3xl">Compara los planes</h3>
-          <div class="mt-10 overflow-x-auto rounded-tarjeta border border-carbon/[0.08]" tabindex="0" role="region" aria-labelledby="tabla-titulo">
+          <div class="relative mt-10 overflow-x-auto rounded-tarjeta border border-carbon/[0.08]" tabindex="0" role="region" aria-labelledby="tabla-titulo">
             <table class="w-full min-w-[40rem] border-collapse text-left">
               <caption id="tabla-titulo" class="sr-only">Comparación de lo que incluye cada plan</caption>
               <thead id="tabla-cabecera" class="bg-carbon text-blanco"></thead>
@@ -518,7 +520,7 @@
     <div class="mx-auto grid max-w-6xl gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
 
       <div class="sm:col-span-2 lg:col-span-5">
-        <img src="assets/logo/menufast-logo-claro.webp" alt="menuFast" width="640" height="206"
+        <img src="assets/logo/menufast-logo-claro-320.webp" alt="menuFast" width="320" height="103"
              loading="lazy" class="h-12 w-auto">
         <p class="mt-6 max-w-sm text-gris-claro">
           Menús digitales para negocios gastronómicos. Tu carta en el celular de tus clientes, con el estilo de tu negocio.

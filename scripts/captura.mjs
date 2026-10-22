@@ -1,5 +1,5 @@
 // Captura de pantalla con Chrome headless vía CDP (sin dependencias).
-// Uso: node tools/captura.mjs <url> <salida.png> [ancho=390] [alto=844] [dpr=2] [js-antes-de-capturar] [espera-ms=2500]
+// Uso: [REDUCED=1] node scripts/captura.mjs <url> <salida.png> [ancho=390] [alto=844] [dpr=2] [js-antes-de-capturar] [espera-ms=2500]
 import { spawn } from 'node:child_process';
 import { writeFileSync, mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -41,6 +41,9 @@ try {
   await cdp('Runtime.enable');
   await cdp('Network.enable');
   await cdp('Emulation.setDeviceMetricsOverride', { width: +ancho, height: +alto, deviceScaleFactor: +dpr, mobile: +ancho < 800 });
+  if (process.env.REDUCED) {
+    await cdp('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
+  }
   await cdp('Page.enable');
   await cdp('Page.navigate', { url });
   await dormir(+espera);

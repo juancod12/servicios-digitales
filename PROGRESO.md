@@ -10,7 +10,8 @@
 | 4 — Beneficios y ejemplos | ✅ Terminado | 2026-10-22 |
 | 5 — Planes y precios | ✅ Terminado | 2026-10-22 |
 | 6 — Confianza, FAQ y cierre | ✅ Terminado | 2026-10-22 |
-| 7 — Animaciones, responsive y accesibilidad | ⏳ Pendiente | |
+| 7 — Animaciones, responsive y accesibilidad | ✅ Terminado | 2026-10-22 |
+| 8 — Rendimiento, SEO y medición | ⏳ Pendiente | |
 
 ---
 
@@ -348,3 +349,39 @@ servicios_web/
 - [x] Con `testimonios: []` la sección **no existe** en el DOM.
 - [x] El botón flotante **no tapa ningún** enlace, botón, select, summary ni iframe: se recorrió toda la página cada 120 px en **360, 768 y 1280 px** → 0 choques. La primera versión chocaba en 1280 con "Ver en pantalla completa" y con el "+" de la última pregunta; se corrigió.
 - [x] Selector del cierre: "Heladería" → "…Mi restaurante es de heladería y me gustaría recibir información".
+
+---
+
+## SPRINT 7 — Animaciones, responsive y accesibilidad
+
+### Qué se hizo
+- **`js/animaciones.js`** con GSAP 3.12.5 + **ScrollTrigger** (cdnjs, versión fija):
+  - Entrada corta (opacidad + 28 px, 0,65 s, en lotes escalonados) para los 20 bloques marcados con `data-animar` en el HTML más las tarjetas generadas (ejemplos, planes y preguntas).
+  - En el hero **no se anima el titular ni el botón** (se ven en el primer pintado). Solo entran la lista de beneficios, la foto, el celular y las etiquetas.
+  - Se anima **solo `opacity`**: con `autoAlpha` (`visibility:hidden`) los títulos salían del árbol de accesibilidad y Lighthouse marcaba un salto h1→h3.
+  - Los ScrollTriggers se crean **después de `load` y con `requestIdleCallback`**, para no competir con el primer pintado.
+  - Red de seguridad: al dejar de hacer scroll, cualquier bloque que esté en pantalla y siga oculto se muestra.
+  - Sin GSAP (CDN caído) todo queda visible.
+- **`prefers-reduced-motion`**: el JS no crea ninguna animación, y el CSS deja transiciones y animaciones en ~0 y quita el scroll suave.
+- **Responsive**: auditoría automática en **360, 390, 768, 1024, 1280 y 1440 px** (scroll horizontal, áreas táctiles, h1, alt, títulos de iframe, saltos de títulos).
+  - **Error encontrado y corregido**: en 360 y 390 px la página medía 585 px. Los textos `sr-only` de la tabla ("Incluido") van con posición absoluta y escapaban del recuadro con scroll porque este no era `relative`. Se encontró ocultando secciones una por una.
+- **Accesibilidad**:
+  - `lang="es-CO"`, un solo `h1` y jerarquía sin saltos.
+  - `alt` en todas las imágenes y `title` en el iframe.
+  - Foco visible: contorno amarillo de 3 px en todo.
+  - Enlace "Saltar al contenido".
+  - Pestañas ARIA con flechas, acordeón nativo y tabla con `caption` y `scope`.
+  - Los íconos llevan `aria-hidden` y los botones de solo ícono tienen `aria-label`.
+  - Los botones se distinguen por forma y texto, no solo por color.
+- **Anclas**: `scroll-padding-top: 6rem` compensa el header fijo, más el reajuste tras generar contenido (Sprint 5).
+- Adelantos del Sprint 8 hechos aquí porque afectaban la medición:
+  - fuentes alojadas en el sitio (`assets/fonts`, WOFF2 latino, con preload) en lugar de Google Fonts;
+  - logo del header en 320 px (14 KB en vez de 34 KB);
+  - se quitó `fetchpriority` de la foto del hero (en móvil está debajo del pliegue y el LCP es el titular);
+  - **`scripts/servidor.mjs`**: vista previa local con gzip, como un hosting real.
+
+### Verificación Sprint 7
+- [x] **Lighthouse móvil, Accesibilidad = 100** (antes de los arreglos: 99, por el orden de títulos).
+- [x] **Sin scroll horizontal** en 360, 390, 768, 1024, 1280 y 1440 (`scrollWidth − innerWidth = 0` y ancho real = ancho del dispositivo).
+- [x] **Con reduced-motion activado** (emulado por CDP): 0 ScrollTriggers, 0 bloques ocultos, transiciones CSS en 0,00001 s y `scroll-behavior: auto`. Solo quedan 2 llamadas internas de GSAP de duración 0, que no son movimiento visible.
+- [x] **Áreas táctiles**: 0 elementos interactivos visibles por debajo de 44×44 px en los 6 anchos.

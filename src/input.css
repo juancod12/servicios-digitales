@@ -1,6 +1,7 @@
 /* Entrada de Tailwind. Se compila a css/app.css (ver README / build.sh). */
 @import "tailwindcss";
 @import "./tokens.css";
+@import "./fuentes.css";
 
 /* Las demos embebidas no deben generar clases */
 @source not "../demos";
