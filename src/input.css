@@ -60,6 +60,79 @@
       radial-gradient(50% 60% at 50% 50%, color-mix(in srgb, var(--color-verde) 8%, transparent), transparent 70%);
   }
 
+  /* Botón secundario sobre fondo oscuro */
+  .btn-fantasma {
+    @apply inline-flex min-h-12 items-center justify-center rounded-pastilla border border-blanco/20 px-6 font-display font-bold text-blanco
+      transition-[background-color,border-color] duration-300 ease-premium hover:border-blanco/40 hover:bg-blanco/5;
+  }
+
+  /* Texto con degradado de marca (amarillo → coral), legible sobre carbón */
+  .texto-degradado {
+    background: linear-gradient(100deg, var(--color-amarillo) 10%, var(--color-coral) 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Trama de puntos sutil, encima de la malla de color */
+  .trama-puntos::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: radial-gradient(color-mix(in srgb, var(--color-blanco) 9%, transparent) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(ellipse 70% 60% at 70% 40%, black, transparent);
+    pointer-events: none;
+  }
+
+  /* Lista de beneficios del hero con check */
+  .beneficio-hero {
+    @apply flex items-start gap-3 text-[0.9375rem] text-blanco;
+  }
+  .beneficio-hero::before {
+    content: "";
+    @apply mt-0.5 size-5 shrink-0 rounded-pastilla bg-amarillo;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='10' fill='black'/%3E%3Cpath d='M6 10.5l2.6 2.5L14 7.5' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask-mode: luminance;
+  }
+
+  /* Mockup de teléfono en CSS (sin imágenes) */
+  .telefono {
+    @apply rounded-[2.4rem] bg-carbon-hondo p-[0.45rem] shadow-flotante;
+    aspect-ratio: 390 / 844;
+    outline: 1px solid color-mix(in srgb, var(--color-blanco) 16%, transparent);
+    outline-offset: -1px;
+  }
+  .telefono::before {
+    content: "";
+    @apply absolute left-1/2 top-[3%] z-10 h-[3.6%] w-[30%] -translate-x-1/2 rounded-pastilla bg-carbon-hondo;
+  }
+  .telefono__pantalla {
+    @apply h-full w-full overflow-hidden rounded-[2rem] bg-carbon pt-[11%];
+  }
+
+  /* Etiqueta flotante de vidrio */
+  .chip-vidrio {
+    @apply border border-blanco/10 bg-carbon/70 backdrop-blur-xl backdrop-saturate-150 inline-flex items-center gap-2 rounded-pastilla px-3.5 py-2 text-sm font-semibold text-blanco shadow-flotante;
+  }
+
+  /* Enlace con flecha sobre fondo claro */
+  .enlace-flecha {
+    @apply inline-flex min-h-11 items-center gap-2 font-display font-bold text-carbon underline decoration-coral decoration-2 underline-offset-[6px]
+      transition-[gap] duration-300 ease-premium hover:gap-3;
+  }
+  .enlace-flecha::after { content: "→"; }
+
+  /* Tarjetas de la sección problema */
+  .tarjeta-problema {
+    @apply rounded-tarjeta border border-carbon/[0.07] bg-blanco p-6 shadow-capa
+      transition-transform duration-500 ease-premium;
+  }
+  .vineta {
+    @apply relative h-28 overflow-hidden rounded-2xl border border-carbon/[0.06] bg-crema p-4;
+  }
+
   /* Navegación */
   .nav-enlace {
     @apply relative inline-flex min-h-11 items-center rounded-pastilla px-4 text-[0.9375rem] font-medium text-gris-claro

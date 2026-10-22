@@ -1,0 +1,7 @@
+<!doctype html><meta charset="utf-8"><title>anchos</title>
+<style>body{margin:0;background:#888;display:flex;gap:12px;padding:12px;align-items:flex-start;font:12px sans-serif}
+div{display:flex;flex-direction:column;gap:4px} iframe{border:0;background:#fff}</style>
+<script>
+const p=new URLSearchParams(location.search), w=(p.get('w')||'360,768,1280').split(','), h=p.get('h')||700, url=p.get('url')||'../index.html';
+document.write(w.map(x=>`<div>${x}px<iframe src="${url}" width="${x}" height="${h}" data-w="${x}"></iframe></div>`).join(''));
+</script>

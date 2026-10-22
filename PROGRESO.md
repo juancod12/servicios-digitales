@@ -4,8 +4,9 @@
 | Sprint | Estado | Fecha |
 |---|---|---|
 | 0 — Reconocimiento y diagnóstico | ✅ Aprobado | 2026-10-22 |
-| 1 — Base e identidad visual | ✅ Terminado, **esperando revisión** | 2026-10-22 |
-| 2 — Hero y problema | ⏳ Pendiente | |
+| 1 — Base e identidad visual | ✅ Aprobado | 2026-10-22 |
+| 2 — Hero y problema | ✅ Terminado, **esperando revisión** | 2026-10-22 |
+| 3 — Demo interactiva | ⏳ Pendiente | |
 
 ---
 
@@ -219,4 +220,35 @@ servicios_web/
 - [x] Contraste ≥ 4,5:1 en todas las combinaciones usadas (coral/carbón 5,78 · gris-claro/carbón 8,51 · gris/crema 6,27 · amarillo/carbón 11,65 · blanco/verde 5,25).
 - [x] Áreas táctiles de 44 px o más en todos los enlaces y botones visibles (el del logo se subió de 36 a 44 px).
 
->>> PAUSA: esperando revisión para iniciar el Sprint 2.
+>>> Aprobado ("continua").
+
+---
+
+## SPRINT 2 — Inicio (hero) y sección del problema
+
+### Qué se hizo
+- **Hero** sobre la malla de color carbón con una trama de puntos sutil. Composición asimétrica en 12 columnas: el texto ocupa 7 y el visual 5.
+  - Etiqueta "TU NEGOCIO MERECE DESTACAR"; único `h1` con el titular del docx (la segunda frase con degradado amarillo→coral); texto descriptivo; CTA coral "Quiero mi menú digital" → WhatsApp; botón secundario "Ver cómo funciona" → `#demo`; texto complementario; los 5 beneficios del docx con check.
+  - Visual: foto de hamburguesa (rotada 2°) con un **mockup de celular hecho en CSS** superpuesto (clase `.telefono`, reutilizable en el Sprint 3) que muestra una **captura real del menú Básico**, más dos etiquetas de vidrio ("Escanea y mira la carta", "Cuenta estimada"), que describen funciones reales de las demos.
+- **Problema** (fondo crema): título y texto del docx 7.2 en una columna fija, y una cuadrícula bento escalonada con **4 situaciones**, cada una con una mini ilustración hecha en CSS: carta desactualizada, precios corregidos a mano, "¿cómo se ve ese plato?" y reimprimir por cada cambio. El tono es de reconocimiento, sin asustar. Termina con un enlace a la demo.
+- **Imágenes**:
+  - `assets/img/hero-hamburguesa-{480,800,1200}.webp` (49–221 KB, recorte 4:5 de la foto de 3,2 MB de la demo) con `srcset`.
+  - `assets/img/capturas/{basico-inicio,basico-categoria,pro-inicio}-{390,780}.webp`: capturas de las demos a tamaño de teléfono (390×844 a 2x). Las de categoría y Pro se usarán como fallback en el Sprint 3.
+- **scripts/captura.mjs**: captura con Chrome headless por CDP, sin dependencias. También reporta errores de consola, excepciones y respuestas 4xx/5xx. **scripts/anchos.html**: muestra la página en iframes de anchos exactos.
+
+### Decisiones
+- El `h1` va escrito en el HTML, no generado por JS, por SEO. La prueba A/B del Sprint 8 lo reemplazará solo si está activa.
+- Las imágenes del hero no llevan `loading="lazy"` (regla del sprint). La del logo del footer sí.
+- La isla del celular tapaba el encabezado de la captura, así que se agregó una franja de barra de estado (`pt-[11%]`), como en un teléfono real.
+
+### Pregunta nueva
+17. El hero (lista del docx 6) menciona **"Código QR personalizado"** y **"Botón de WhatsApp, según el plan"**, pero ningún plan de la parte A los nombra. ¿Qué planes incluyen el QR y cuáles el botón de WhatsApp? Por ahora se deja como en el docx ("según el plan"), y en el Sprint 5 no se pondrán en las tarjetas de planes hasta tener la respuesta.
+
+### Verificación Sprint 2
+- [x] **Above the fold en móvil**: el botón termina en y=580 px en 360×640, y=518 en 390×844 y y=535 en 768×1024. El titular y el CTA se ven sin hacer scroll.
+- [x] El botón abre `wa.me/573044168961` con el mensaje prellenado del docx.
+- [x] Ninguna promesa de ventas: búsqueda de "vende más", "vender más", "garantiz", "aumenta tus ventas", "más ventas" y "quedan" en el texto visible = 0 resultados.
+- [x] Todas las imágenes tienen `alt`, `width` y `height`. `loading="lazy"` en todas menos las del hero.
+- [x] Un solo `h1`; sin scroll horizontal en 360, 390, 768 y 1280; sin errores de consola ni 4xx (comprobado con `scripts/captura.mjs`).
+
+>>> PAUSA: esperando revisión para iniciar el Sprint 3.

@@ -79,18 +79,141 @@
   <!-- ===================== CONTENIDO ===================== -->
   <main id="contenido">
 
-    <!-- Sprint 2: Hero -->
-    <section id="inicio" class="malla-carbon relative grid min-h-svh place-items-center px-4 pb-16 pt-32 text-blanco">
-      <div class="mx-auto w-full max-w-6xl">
-        <p class="etiqueta text-amarillo">Tu negocio merece destacar</p>
-        <h1 class="mt-4 max-w-3xl text-4xl sm:text-6xl">menuFast · Menús digitales para negocios gastronómicos</h1>
-        <p class="mt-6 text-gris-claro">Sección de inicio en construcción (Sprint 2).</p>
+    <!-- ===================== INICIO (HERO) ===================== -->
+    <section id="inicio" aria-labelledby="hero-titulo"
+             class="malla-carbon trama-puntos relative isolate overflow-hidden px-4 pb-20 pt-28 text-blanco sm:px-6 sm:pt-36 lg:pb-28">
+      <div class="mx-auto grid max-w-6xl items-center gap-y-16 lg:grid-cols-12 lg:gap-x-8">
+
+        <!-- Texto -->
+        <div class="lg:col-span-7 lg:pr-6">
+          <p class="etiqueta inline-flex items-center gap-2 rounded-pastilla border border-amarillo/30 bg-amarillo/10 px-3 py-1.5 text-amarillo">
+            <span class="size-1.5 rounded-pastilla bg-amarillo" aria-hidden="true"></span>
+            Tu negocio merece destacar
+          </p>
+
+          <h1 id="hero-titulo" class="mt-5 text-[2.125rem] sm:text-5xl lg:text-[3.75rem]">
+            Tu comida conquista por el sabor.
+            <span class="texto-degradado">Tu menú debe conquistar desde la primera mirada</span>
+          </h1>
+
+          <p class="mt-5 max-w-xl text-lg text-gris-claro sm:mt-6">
+            Transforma la manera en que tus clientes descubren tus productos con un menú digital atractivo, personalizado y fácil de consultar desde su celular.
+          </p>
+
+          <div class="mt-7 flex flex-col items-start gap-3 sm:mt-8 sm:flex-row sm:items-center sm:gap-4">
+            <a data-wa class="btn-cta group h-14 px-7 text-lg">
+              Quiero mi menú digital
+              <svg aria-hidden="true" viewBox="0 0 20 20" class="size-5 transition-transform duration-300 ease-premium group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12M11 5l5 5-5 5"/></svg>
+            </a>
+            <a href="#demo" class="btn-fantasma">Ver cómo funciona</a>
+          </div>
+          <p class="mt-4 text-sm text-gris-claro">Personaliza tu menú y descubre una nueva forma de presentar tu negocio.</p>
+
+          <ul class="mt-10 grid gap-x-6 gap-y-3 border-t border-blanco/10 pt-8 sm:grid-cols-2" aria-label="Qué incluye">
+            <li class="beneficio-hero">Fotografías, productos y precios</li>
+            <li class="beneficio-hero">Código QR personalizado</li>
+            <li class="beneficio-hero">Diseño interactivo para tu negocio</li>
+            <li class="beneficio-hero">Adaptable a celulares</li>
+            <li class="beneficio-hero">Botón de WhatsApp, según el plan</li>
+          </ul>
+        </div>
+
+        <!-- Visual: foto + celular superpuesto -->
+        <div class="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
+          <div class="relative ml-auto w-[78%] rotate-[2deg] overflow-hidden rounded-[2rem] border border-blanco/10 shadow-flotante">
+            <img src="assets/img/hero-hamburguesa-800.webp"
+                 srcset="assets/img/hero-hamburguesa-480.webp 480w, assets/img/hero-hamburguesa-800.webp 800w, assets/img/hero-hamburguesa-1200.webp 1200w"
+                 sizes="(min-width: 1024px) 360px, 70vw"
+                 width="800" height="1000" alt="Hamburguesa de pollo apanado con queso, lechuga y tomate, acompañada de papas fritas"
+                 class="aspect-[4/5] w-full object-cover" fetchpriority="high" decoding="async">
+            <div class="absolute inset-0 bg-gradient-to-t from-carbon-hondo/60 via-transparent to-transparent" aria-hidden="true"></div>
+          </div>
+
+          <!-- Celular con captura de una demo real -->
+          <div class="telefono absolute -bottom-10 left-0 w-[46%] -rotate-[4deg] sm:-bottom-12">
+            <div class="telefono__pantalla">
+              <img src="assets/img/capturas/basico-inicio-390.webp"
+                   srcset="assets/img/capturas/basico-inicio-390.webp 390w, assets/img/capturas/basico-inicio-780.webp 780w"
+                   sizes="(min-width: 1024px) 220px, 45vw"
+                   width="390" height="844" alt="Captura de un menú digital: categorías de productos con fotos"
+                   class="h-full w-full object-cover object-top" decoding="async">
+            </div>
+          </div>
+
+          <!-- Etiquetas flotantes -->
+          <p class="chip-vidrio absolute -top-5 right-2 sm:-right-3" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="size-4 text-amarillo" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg>
+            Escanea y mira la carta
+          </p>
+          <p class="chip-vidrio absolute -right-1 bottom-24 sm:-right-4" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="size-4 text-coral" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 8H6"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg>
+            Cuenta estimada
+          </p>
+        </div>
       </div>
     </section>
 
-    <!-- Sprint 2: Problema -->
-    <section id="problema" class="bg-crema px-4 py-24">
-      <p class="mx-auto max-w-6xl text-gris">Sección del problema en construcción (Sprint 2).</p>
+    <!-- ===================== PROBLEMA ===================== -->
+    <section id="problema" aria-labelledby="problema-titulo" class="bg-crema px-4 py-24 sm:px-6 lg:py-32">
+      <div class="mx-auto grid max-w-6xl gap-12 lg:grid-cols-12 lg:gap-8">
+
+        <div class="lg:sticky lg:top-32 lg:col-span-5 lg:self-start">
+          <p class="etiqueta text-coral-texto">Tu carta, hoy</p>
+          <h2 id="problema-titulo" class="mt-4 text-3xl sm:text-[2.75rem]">
+            Tu carta es una parte importante de la experiencia de tus clientes
+          </h2>
+          <p class="mt-6 max-w-md text-lg text-gris">
+            Presenta tus productos y precios de una manera clara, organizada y atractiva.
+          </p>
+          <a href="#demo" class="enlace-flecha mt-8">Mira cómo se ve un menú digital</a>
+        </div>
+
+        <ul class="grid gap-4 sm:grid-cols-2 lg:col-span-7 lg:gap-5">
+          <li class="tarjeta-problema">
+            <div class="vineta" aria-hidden="true">
+              <span class="font-display text-sm font-bold text-gris">Carta</span>
+              <span class="mt-2 block h-1.5 w-4/5 rounded-pastilla bg-carbon/10"></span>
+              <span class="mt-1.5 block h-1.5 w-3/5 rounded-pastilla bg-carbon/10"></span>
+              <span class="mt-1.5 block h-1.5 w-2/3 rounded-pastilla bg-carbon/10"></span>
+              <span class="absolute right-3 top-3 rounded-pastilla bg-amarillo px-2 py-0.5 text-xs font-bold text-carbon">¡Nuevo!</span>
+            </div>
+            <h3 class="mt-5 text-xl">La carta impresa se queda atrás</h3>
+            <p class="mt-2 text-gris">Llega un plato nuevo, otro se deja de preparar… y la carta sigue igual que el día que se imprimió.</p>
+          </li>
+
+          <li class="tarjeta-problema sm:translate-y-10">
+            <div class="vineta flex items-center justify-center gap-3" aria-hidden="true">
+              <span class="font-display text-lg font-bold text-gris line-through decoration-coral decoration-2">$18.000</span>
+              <span class="-rotate-6 font-display text-2xl font-bold italic text-coral-texto">$21.000</span>
+            </div>
+            <h3 class="mt-5 text-xl">Precios corregidos a mano</h3>
+            <p class="mt-2 text-gris">Tachar y escribir encima resuelve el momento, pero la carta pierde orden y claridad.</p>
+          </li>
+
+          <li class="tarjeta-problema">
+            <div class="vineta flex items-center gap-3" aria-hidden="true">
+              <span class="grid size-14 shrink-0 place-items-center rounded-xl border-2 border-dashed border-carbon/20 font-display text-2xl font-bold text-gris">?</span>
+              <span class="grow">
+                <span class="block font-display text-sm font-bold text-carbon">Hamburguesa especial</span>
+                <span class="mt-1.5 block h-1.5 w-full rounded-pastilla bg-carbon/10"></span>
+                <span class="mt-1.5 block h-1.5 w-2/3 rounded-pastilla bg-carbon/10"></span>
+              </span>
+            </div>
+            <h3 class="mt-5 text-xl">¿Cómo se ve ese plato?</h3>
+            <p class="mt-2 text-gris">Un nombre en una lista no muestra cómo llega a la mesa. El cliente pregunta, duda o pide lo de siempre.</p>
+          </li>
+
+          <li class="tarjeta-problema sm:translate-y-10">
+            <div class="vineta relative flex items-end justify-center" aria-hidden="true">
+              <span class="absolute bottom-4 h-14 w-20 -translate-x-3 -rotate-6 rounded-lg border border-carbon/10 bg-blanco"></span>
+              <span class="absolute bottom-4 h-14 w-20 translate-x-3 rotate-3 rounded-lg border border-carbon/10 bg-blanco"></span>
+              <span class="relative h-14 w-20 rounded-lg border border-carbon/15 bg-blanco shadow-capa"></span>
+            </div>
+            <h3 class="mt-5 text-xl">Reimprimir por cada cambio</h3>
+            <p class="mt-2 text-gris">Cada ajuste de precios o productos implica volver a diseñar e imprimir todas las cartas.</p>
+          </li>
+        </ul>
+      </div>
     </section>
 
     <!-- Sprint 3: Demo interactiva -->
