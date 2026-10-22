@@ -148,6 +148,25 @@
     @apply bg-coral text-carbon shadow-cta;
   }
 
+  /* Beneficios (bento) */
+  .tarjeta-beneficio {
+    @apply flex flex-col gap-5 rounded-tarjeta border border-carbon/[0.07] bg-crema p-7 sm:flex-row sm:items-start
+      transition-[transform,box-shadow] duration-500 ease-premium hover:-translate-y-1 hover:shadow-capa;
+  }
+  .icono-beneficio {
+    @apply grid size-12 shrink-0 place-items-center rounded-2xl bg-carbon text-amarillo;
+  }
+  .icono-beneficio svg { @apply size-6; }
+  .pastilla-categoria {
+    @apply rounded-pastilla border border-carbon/10 bg-blanco px-3 py-1 text-sm font-medium text-carbon;
+  }
+
+  /* Ejemplos por tipo de negocio */
+  .tarjeta-ejemplo {
+    @apply flex flex-col rounded-tarjeta border border-carbon/[0.07] bg-blanco p-2 pb-4 shadow-capa
+      transition-transform duration-500 ease-premium hover:-translate-y-1;
+  }
+
   /* Navegación */
   .nav-enlace {
     @apply relative inline-flex min-h-11 items-center rounded-pastilla px-4 text-[0.9375rem] font-medium text-gris-claro

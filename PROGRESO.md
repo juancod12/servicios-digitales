@@ -6,8 +6,9 @@
 | 0 — Reconocimiento y diagnóstico | ✅ Aprobado | 2026-10-22 |
 | 1 — Base e identidad visual | ✅ Aprobado | 2026-10-22 |
 | 2 — Hero y problema | ✅ Aprobado | 2026-10-22 |
-| 3 — Demo interactiva | ✅ Terminado, **esperando revisión** | 2026-10-22 |
-| 4 — Beneficios y ejemplos | ⏳ Pendiente | |
+| 3 — Demo interactiva | ✅ Aprobado | 2026-10-22 |
+| 4 — Beneficios y ejemplos | ✅ Terminado | 2026-10-22 |
+| 5 — Planes y precios | ⏳ Pendiente | |
 
 ---
 
@@ -288,4 +289,23 @@ servicios_web/
 - [x] Funciona en Chrome escritorio (1280) y en emulación móvil (360 y 390, `mobile: true`, DPR 2). Sin scroll horizontal.
 - [x] Fallback probado con una demo inexistente: aparece la captura con el botón y el iframe queda oculto.
 
->>> PAUSA: esperando revisión para iniciar el Sprint 4.
+>>> Aprobado. **El humano indicó: "continúa con todos los sprints, no preguntes más, haz un resumen apenas finalices".** Desde aquí no hay pausas entre sprints: cada uno se verifica, se registra y se commitea, y al final se entrega un resumen.
+
+---
+
+## SPRINT 4 — Beneficios y ejemplos por tipo de negocio
+
+### Qué se hizo
+- **Beneficios** (fondo blanco): cuadrícula bento de 6 celdas con ícono SVG y frase del docx 5.1/7.4. La tarjeta grande ("Mejor presentación") es oscura con malla de color y un mini celular inclinado que muestra la lista de productos de la demo.
+  - "Actualizable" aclara: *"Con el plan Pro + Panel Admin lo haces tú mismo, cuando quieras."*
+  - "Contacto por WhatsApp" aclara: *"Según el plan contratado."* (pregunta abierta 17).
+- **Ejemplos por tipo de negocio** (fondo crema): las 8 categorías del docx 4.3 se generan desde `config.tiposNegocio` (nombre, imagen, descripción) con `js/secciones.js`. Cada tarjeta lleva el botón **"¿Cómo se vería el mío?"** → WhatsApp con el tipo ya puesto.
+- **Imágenes** `assets/img/negocios/*-{400,800}.webp` (4:3):
+  - 5 salen de las demos: hamburguesería, comidas rápidas (bocadillo), comida típica (bistec con papas), cafetería y comidas y bebidas (mojito).
+  - **3 son fotos libres de Openverse** (pizzería CC0, postres de dominio público, heladería CC0). Unsplash bloqueó la búsqueda automática. Los créditos están en `assets/img/CREDITOS.md`.
+
+### Verificación Sprint 4
+- [x] Cada botón de ejemplo manda su tipo: "…Mi restaurante es de hamburguesería / pizzería / comidas rápidas / comida típica / cafetería / postres / heladería / comidas y bebidas y me gustaría recibir información" (8 de 8, leídos de los `href`).
+- [x] Ningún beneficio promete una función que el plan no incluye: "Actualizable" aclara que la autogestión es del Pro + Panel Admin, y WhatsApp va "según el plan".
+- [x] Cuadrícula de ejemplos: **1 columna en 360, 2 en 768 y 4 en 1280** (medido con `gridTemplateColumns`). Sin scroll horizontal.
+- [x] Las imágenes de ejemplos y beneficios tienen `alt`, `width`, `height` y `loading="lazy"`.

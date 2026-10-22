@@ -115,15 +115,16 @@ window.MENUFAST = {
     'Recibes tu menú y tu código QR',
   ],
 
+  // Ejemplos por tipo de negocio (sección "Ejemplos" y selector del cierre).
   tiposNegocio: [
-    'Hamburguesería',
-    'Pizzería',
-    'Comidas rápidas',
-    'Comida típica',
-    'Cafetería',
-    'Postres',
-    'Heladería',
-    'Comidas y bebidas',
+    { nombre: 'Hamburguesería', imagen: 'hamburgueseria', descripcion: 'Combos, adiciones y salsas bien organizados, con la foto de cada hamburguesa.' },
+    { nombre: 'Pizzería', imagen: 'pizzeria', descripcion: 'Tamaños, sabores e ingredientes claros para que elegir sea fácil.' },
+    { nombre: 'Comidas rápidas', imagen: 'comidas-rapidas', descripcion: 'Perros, sándwiches, salchipapas y más, cada cosa en su categoría.' },
+    { nombre: 'Comida típica', imagen: 'comida-tipica', descripcion: 'Corrientazo, platos del día y especiales con su foto y su precio.' },
+    { nombre: 'Cafetería', imagen: 'cafeteria', descripcion: 'Bebidas calientes, frías y acompañamientos en una carta clara.' },
+    { nombre: 'Postres', imagen: 'postres', descripcion: 'Tortas, porciones y antojos presentados para abrir el apetito.' },
+    { nombre: 'Heladería', imagen: 'heladeria', descripcion: 'Sabores, toppings y tamaños a la vista de tus clientes.' },
+    { nombre: 'Comidas y bebidas', imagen: 'comidas-y-bebidas', descripcion: 'Platos, cócteles y bebidas en un mismo menú, con categorías separadas.' },
   ],
 
   // URL pública del sitio, para los QR de las demos.
