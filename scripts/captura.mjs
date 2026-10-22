@@ -1,5 +1,5 @@
 // Captura de pantalla con Chrome headless vía CDP (sin dependencias).
-// Uso: [REDUCED=1] node scripts/captura.mjs <url> <salida.png> [ancho=390] [alto=844] [dpr=2] [js-antes-de-capturar] [espera-ms=2500]
+// Uso: [REDUCED=1] [LOGS=1] node scripts/captura.mjs <url> <salida.png> [ancho=390] [alto=844] [dpr=2] [js-antes-de-capturar] [espera-ms=2500]
 import { spawn } from 'node:child_process';
 import { writeFileSync, mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -33,6 +33,7 @@ try {
     if (m.id && pendientes.has(m.id)) { pendientes.get(m.id)(m); pendientes.delete(m.id); }
     if (m.method === 'Runtime.exceptionThrown') console.error('EXCEPCION:', m.params.exceptionDetails.exception?.description);
     if (m.method === 'Runtime.consoleAPICalled' && m.params.type === 'error') console.error('CONSOLE.ERROR:', m.params.args.map((a) => a.value ?? a.description).join(' '));
+    if (process.env.LOGS && m.method === 'Runtime.consoleAPICalled' && m.params.type === 'log') console.log('LOG:', m.params.args.map((a) => a.value ?? (a.preview ? JSON.stringify(Object.fromEntries(a.preview.properties.map((p) => [p.name, p.value]))) : a.description)).join(' '));
     if (m.method === 'Network.loadingFailed') console.error('FALLO RED:', m.params.errorText);
     if (m.method === 'Network.responseReceived' && m.params.response.status >= 400) console.error('HTTP', m.params.response.status, m.params.response.url);
   });

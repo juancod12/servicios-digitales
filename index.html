@@ -6,19 +6,29 @@
   <title>menuFast · Menús digitales para negocios gastronómicos</title>
   <meta name="description" content="Menús digitales personalizados para restaurantes, cafeterías y negocios de comida en Colombia. Tu carta en el celular de tus clientes, con código QR y el estilo de tu negocio.">
   <meta name="theme-color" content="">
+  <meta name="robots" content="index, follow">
+  <!-- TODO: cuando haya dominio, agregar <link rel="canonical" href="https://DOMINIO/"> y
+       cambiar og:url y og:image por URLs absolutas (WhatsApp y Facebook las exigen). -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_CO">
+  <meta property="og:site_name" content="menuFast">
+  <meta property="og:title" content="menuFast · Tu carta en el celular de tus clientes">
+  <meta property="og:description" content="Menús digitales personalizados para restaurantes y negocios de comida en Colombia: fotos, precios, categorías y código QR. Planes desde $100.000, pago único.">
+  <meta property="og:image" content="assets/og/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Logo de menuFast junto a un celular que muestra un menú digital">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="assets/logo/favicon-48.png">
   <link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png">
 
   <link rel="preload" href="assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="stylesheet" href="css/app.css">
 
   <script src="js/config.js" defer></script>
   <script src="js/main.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" defer></script>
   <script src="js/secciones.js" defer></script>
   <script src="js/demo-telefono.js" defer></script>
   <script src="js/animaciones.js" defer></script>
@@ -51,7 +61,7 @@
       </nav>
 
       <div class="flex items-center gap-2">
-        <a data-wa class="btn-cta group hidden h-12 sm:inline-flex">
+        <a data-wa data-origen="header" class="btn-cta group hidden h-12 sm:inline-flex">
           Quiero mi menú digital
           <svg aria-hidden="true" viewBox="0 0 20 20" class="size-4 transition-transform duration-300 ease-premium group-hover:translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12M11 5l5 5-5 5"/></svg>
         </a>
@@ -78,7 +88,7 @@
           <li><a href="#preguntas" class="nav-enlace-movil">Preguntas <span aria-hidden="true">04</span></a></li>
         </ul>
       </nav>
-      <a data-wa class="btn-cta mt-3 w-full">Quiero mi menú digital</a>
+      <a data-wa data-origen="menu-movil" class="btn-cta mt-3 w-full">Quiero mi menú digital</a>
     </div>
   </header>
 
@@ -107,7 +117,7 @@
           </p>
 
           <div class="mt-7 flex flex-col items-start gap-3 sm:mt-8 sm:flex-row sm:items-center sm:gap-4">
-            <a data-wa class="btn-cta group h-14 px-7 text-lg">
+            <a data-wa data-origen="hero" class="btn-cta group h-14 px-7 text-lg">
               Quiero mi menú digital
               <svg aria-hidden="true" viewBox="0 0 20 20" class="size-5 transition-transform duration-300 ease-premium group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h12M11 5l5 5-5 5"/></svg>
             </a>
@@ -116,17 +126,17 @@
           <p class="mt-4 text-sm text-gris-claro">Personaliza tu menú y descubre una nueva forma de presentar tu negocio.</p>
 
           <ul class="mt-10 grid gap-x-6 gap-y-3 border-t border-blanco/10 pt-8 sm:grid-cols-2" aria-label="Qué incluye">
-            <li class="beneficio-hero">Fotografías, productos y precios</li>
-            <li class="beneficio-hero">Código QR personalizado</li>
-            <li class="beneficio-hero">Diseño interactivo para tu negocio</li>
-            <li class="beneficio-hero">Adaptable a celulares</li>
-            <li class="beneficio-hero">Botón de WhatsApp, según el plan</li>
+            <li class="beneficio-hero entrada">Fotografías, productos y precios</li>
+            <li class="beneficio-hero entrada">Código QR personalizado</li>
+            <li class="beneficio-hero entrada">Diseño interactivo para tu negocio</li>
+            <li class="beneficio-hero entrada">Adaptable a celulares</li>
+            <li class="beneficio-hero entrada">Botón de WhatsApp, según el plan</li>
           </ul>
         </div>
 
         <!-- Visual: foto + celular superpuesto -->
         <div class="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
-          <div class="relative ml-auto w-[78%] rotate-[2deg] overflow-hidden rounded-[2rem] border border-blanco/10 shadow-flotante">
+          <div class="entrada-foto relative ml-auto w-[78%] rotate-[2deg] overflow-hidden rounded-[2rem] border border-blanco/10 shadow-flotante">
             <img src="assets/img/hero-hamburguesa-800.webp"
                  srcset="assets/img/hero-hamburguesa-480.webp 480w, assets/img/hero-hamburguesa-800.webp 800w, assets/img/hero-hamburguesa-1200.webp 1200w"
                  sizes="(min-width: 1024px) 360px, 70vw"
@@ -136,7 +146,7 @@
           </div>
 
           <!-- Celular con captura de una demo real -->
-          <div class="telefono absolute -bottom-10 left-0 w-[46%] -rotate-[4deg] sm:-bottom-12">
+          <div class="entrada-telefono telefono absolute -bottom-10 left-0 w-[46%] -rotate-[4deg] sm:-bottom-12">
             <div class="telefono__pantalla">
               <img src="assets/img/capturas/basico-inicio-390.webp"
                    srcset="assets/img/capturas/basico-inicio-390.webp 390w, assets/img/capturas/basico-inicio-780.webp 780w"
@@ -147,11 +157,11 @@
           </div>
 
           <!-- Etiquetas flotantes -->
-          <p class="chip-vidrio absolute -top-5 right-2 sm:-right-3" aria-hidden="true">
+          <p class="entrada chip-vidrio absolute -top-5 right-2 sm:-right-3" aria-hidden="true">
             <svg viewBox="0 0 24 24" class="size-4 text-amarillo" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg>
             Escanea y mira la carta
           </p>
-          <p class="chip-vidrio absolute -right-1 bottom-24 sm:-right-4" aria-hidden="true">
+          <p class="entrada chip-vidrio absolute -right-1 bottom-24 sm:-right-4" aria-hidden="true">
             <svg viewBox="0 0 24 24" class="size-4 text-coral" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 8H6"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg>
             Cuenta estimada
           </p>
@@ -540,7 +550,7 @@
         <h2 class="etiqueta text-gris-claro">Hablemos</h2>
         <ul class="mt-4 grid gap-3">
           <li>
-            <a data-wa class="group flex min-h-11 items-center gap-3 rounded-tarjeta border border-blanco/10 bg-blanco/5 p-3 pr-5
+            <a data-wa data-origen="footer" class="group flex min-h-11 items-center gap-3 rounded-tarjeta border border-blanco/10 bg-blanco/5 p-3 pr-5
                               transition-colors duration-300 ease-premium hover:border-verde hover:bg-verde/20">
               <span class="grid size-10 shrink-0 place-items-center rounded-pastilla bg-verde text-blanco">
                 <svg aria-hidden="true" viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 20.5l1.3-4A8.5 8.5 0 1 1 8 19.6z"/><path d="M9 8.5c0 3.5 2.5 6.5 6.5 6.5l1-1.6-2-1-1 .9c-1.1-.5-2.2-1.6-2.7-2.7l.9-1-1-2z"/></svg>

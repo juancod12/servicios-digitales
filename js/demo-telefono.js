@@ -36,11 +36,11 @@
 
   const track = (evento, datos) => window.menuFastTrack?.(evento, datos);
 
-  // URL absoluta de una demo (para el QR y la pantalla completa).
-  const urlDemo = (plan) => {
-    const base = CFG.urlPublica ? CFG.urlPublica.replace(/\/?$/, '/') : new URL('.', location.href).href;
-    return new URL(plan.demo, base).href;
-  };
+  // URL absoluta de una demo (para la pantalla completa y el fallback).
+  const base = () => (CFG.urlPublica ? CFG.urlPublica.replace(/\/?$/, '/') : new URL('.', location.href).href);
+  const urlDemo = (plan) => new URL(plan.demo, base()).href;
+  // El QR pasa por qr.html, que registra el escaneo y redirige a la demo.
+  const urlQR = (plan) => new URL(`qr.html?plan=${encodeURIComponent(plan.id)}`, base()).href;
 
   /* ---------- Escalado del iframe ---------- */
   const escalar = () => {
@@ -56,9 +56,13 @@
   new ResizeObserver(escalar).observe($pantalla);
 
   /* ---------- QR ---------- */
+  // La librería del QR se descarga solo cuando la demo está por verse.
   const pintarQR = (url) => {
     if (typeof window.qrcode !== 'function') {
-      $qr.textContent = 'QR no disponible';
+      util
+        .cargarScript(util.LIBS.qr)
+        .then(() => activo && pintarQR(urlQR(activo)))
+        .catch(() => ($qr.textContent = 'QR no disponible'));
       return;
     }
     const qr = window.qrcode(0, 'M');
@@ -86,7 +90,7 @@
         ${plan.caracteristicas.map((c) => `<li class="beneficio-hero">${c}</li>`).join('')}
       </ul>
       ${plan.nota ? `<p class="mt-5 border-t border-blanco/10 pt-4 text-sm text-gris-claro">${plan.nota}</p>` : ''}
-      <a data-wa data-wa-plan="${plan.nombre}" class="btn-cta mt-6">Quiero este plan</a>`;
+      <a data-wa data-wa-plan="${plan.nombre}" data-origen="demo" class="btn-cta mt-6">Quiero este plan</a>`;
     util.pintarEnlacesWhatsApp($info);
   };
 
@@ -156,7 +160,7 @@
     $pantalla.setAttribute('aria-labelledby', `pestana-${id}`);
 
     pintarInfo(plan);
-    pintarQR(urlDemo(plan));
+    if (visible) pintarQR(urlQR(plan));
     $completa.href = plan.demo;
     $completa.onclick = () => track('demo_pantalla_completa', { plan: plan.id });
     if (usuario) track('demo_cambio_plan', { plan: plan.id });
@@ -199,6 +203,7 @@
       if (!entradas.some((e) => e.isIntersecting)) return;
       visible = true;
       cargarIframe(activo);
+      pintarQR(urlQR(activo));
       track('demo_visible', { plan: activo.id });
       obs.disconnect();
     },

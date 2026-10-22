@@ -10,6 +10,36 @@
     return;
   }
 
+  /* ---------- Prueba A/B del titular (desactivada por defecto) ----------
+     Si config.hero.pruebaAB.activa = true, cada visitante recibe la versión A o B
+     (se recuerda en su navegador) y la versión viaja en todos los eventos. */
+  let versionTitular = 'original';
+  const ab = CFG.hero && CFG.hero.pruebaAB;
+  if (ab && ab.activa) {
+    try {
+      versionTitular = localStorage.getItem('menufast_ab');
+    } catch (e) {}
+    if (versionTitular !== 'A' && versionTitular !== 'B') {
+      versionTitular = Math.random() < 0.5 ? 'A' : 'B';
+      try { localStorage.setItem('menufast_ab', versionTitular); } catch (e) {}
+    }
+    const h1 = document.getElementById('hero-titulo');
+    if (h1) h1.textContent = versionTitular === 'A' ? ab.versionA : ab.versionB;
+  }
+
+  /* ---------- Medición ----------
+     Única puerta de salida de los eventos. Hoy solo escribe en la consola.
+     TODO: conectar la herramienta de analítica (config.analitica). Con GA4 basta
+     cargar gtag.js con el id y esta función ya envía los eventos. */
+  const track = (evento, datos = {}) => {
+    const payload = { ...datos, version_titular: versionTitular };
+    console.log('[menuFast]', evento, payload);
+    if (CFG.analitica && CFG.analitica.proveedor === 'ga4' && typeof window.gtag === 'function') {
+      window.gtag('event', evento, payload);
+    }
+  };
+  window.menuFastTrack = track;
+
   /* ---------- Utilidades ---------- */
 
   // 100000 → "$100.000"
@@ -34,8 +64,27 @@
     return `https://wa.me/${CFG.contacto.numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
   };
 
+  // Carga un script externo una sola vez (librerías que no hacen falta al inicio).
+  const cargados = {};
+  const cargarScript = (src) =>
+    (cargados[src] ||= new Promise((ok, falla) => {
+      const s = document.createElement('script');
+      s.src = src;
+      s.async = true;
+      s.onload = ok;
+      s.onerror = falla;
+      document.head.appendChild(s);
+    }));
+
+  // Librerías por CDN con versión fija.
+  const LIBS = {
+    gsap: 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
+    scrollTrigger: 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js',
+    qr: 'https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js',
+  };
+
   // Expone las utilidades para los demás scripts.
-  window.menuFastUtil = { formatearCOP, formatearTelefono, enlaceWhatsApp };
+  window.menuFastUtil = { formatearCOP, formatearTelefono, enlaceWhatsApp, cargarScript, LIBS };
 
   /* ---------- Enlaces de WhatsApp declarativos ----------
      <a data-wa data-wa-tipo="Pizzería" data-wa-plan="Menú Pro"> */
@@ -134,10 +183,69 @@
     actualizar();
   };
 
+  /* ---------- Eventos de medición ---------- */
+  const iniciarMedicion = () => {
+    // Clic en cualquier botón de WhatsApp (delegado: incluye los generados por JS).
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('[data-wa]');
+      if (!a) return;
+      track('clic_whatsapp', {
+        origen: a.dataset.origen || a.closest('section, header, footer')?.id || 'otro',
+        plan: a.dataset.waPlan || null,
+        tipo_negocio: a.dataset.waTipo || null,
+      });
+    });
+    // Visita a la sección de precios (una vez por carga).
+    const planes = document.getElementById('planes');
+    if (planes) {
+      const obs = new IntersectionObserver((ent) => {
+        if (ent.some((x) => x.isIntersecting)) {
+          track('visita_precios');
+          obs.disconnect();
+        }
+      }, { threshold: 0.25 });
+      obs.observe(planes);
+    }
+  };
+
+  /* ---------- Datos estructurados (SEO) desde config.js ---------- */
+  const pintarDatosEstructurados = () => {
+    const datos = {
+      '@context': 'https://schema.org',
+      '@type': 'ProfessionalService',
+      name: CFG.marca,
+      description: CFG.categoria + '. Menús digitales personalizados con fotos, precios, categorías y código QR.',
+      areaServed: { '@type': 'Country', name: 'Colombia' },
+      telephone: '+' + CFG.contacto.numeroWhatsApp,
+      sameAs: CFG.contacto.instagram ? [`https://www.instagram.com/${CFG.contacto.instagram}/`] : undefined,
+      url: CFG.urlPublica || undefined,
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Planes de menú digital',
+        itemListElement: CFG.planes.map((p) => ({
+          '@type': 'Offer',
+          name: p.nombre,
+          description: p.caracteristicas.join('. '),
+          priceSpecification: {
+            '@type': 'PriceSpecification',
+            priceCurrency: 'COP',
+            ...(p.precioDesde ? { minPrice: p.precio } : { price: p.precio }),
+          },
+        })),
+      },
+    };
+    const s = document.createElement('script');
+    s.type = 'application/ld+json';
+    s.textContent = JSON.stringify(datos);
+    document.head.appendChild(s);
+  };
+
   /* ---------- Inicio ---------- */
   pintarThemeColor();
   pintarContacto();
   pintarEnlacesWhatsApp();
   iniciarHeader();
   iniciarFlotante();
+  iniciarMedicion();
+  pintarDatosEstructurados();
 })();

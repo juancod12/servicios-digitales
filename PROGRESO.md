@@ -11,7 +11,8 @@
 | 5 — Planes y precios | ✅ Terminado | 2026-10-22 |
 | 6 — Confianza, FAQ y cierre | ✅ Terminado | 2026-10-22 |
 | 7 — Animaciones, responsive y accesibilidad | ✅ Terminado | 2026-10-22 |
-| 8 — Rendimiento, SEO y medición | ⏳ Pendiente | |
+| 8 — Rendimiento, SEO y medición | 🟡 **En curso (pausado a pedido del humano)** | 2026-10-22 |
+| 9 — QA final y entrega | ⏳ Pendiente | |
 
 ---
 
@@ -385,3 +386,57 @@ servicios_web/
 - [x] **Sin scroll horizontal** en 360, 390, 768, 1024, 1280 y 1440 (`scrollWidth − innerWidth = 0` y ancho real = ancho del dispositivo).
 - [x] **Con reduced-motion activado** (emulado por CDP): 0 ScrollTriggers, 0 bloques ocultos, transiciones CSS en 0,00001 s y `scroll-behavior: auto`. Solo quedan 2 llamadas internas de GSAP de duración 0, que no son movimiento visible.
 - [x] **Áreas táctiles**: 0 elementos interactivos visibles por debajo de 44×44 px en los 6 anchos.
+
+---
+
+## SPRINT 8 — Rendimiento, SEO y medición  🟡 EN CURSO (pausado)
+
+> El humano pidió detener el trabajo aquí, documentar y guardar. **Para retomar: leer esta sección y "Siguiente paso".**
+
+### Hecho
+- **SEO**:
+  - title, description, `robots`;
+  - **Open Graph y Twitter Card** con imagen propia `assets/og/og-image.jpg` (1200×630, generada desde `scripts/og.html` con las fuentes y colores del sitio);
+  - `favicon.ico` (16/32/48) + PNG + apple-touch-icon;
+  - `robots.txt`;
+  - **datos estructurados JSON-LD** (`ProfessionalService` + `OfferCatalog` con los 3 planes en COP), **generados desde config.js** para que los precios no se desincronicen.
+- **Medición** (`window.menuFastTrack` en `js/main.js`): función `track()` central que hoy solo hace `console.log` (y envía a GA4 si `config.analitica.proveedor === 'ga4'` y existe `gtag`). Eventos:
+  - `clic_whatsapp`: delegado, con `origen` (header, menu-movil, hero, demo, ejemplos, planes, cierre, flotante, footer), `plan` y `tipo_negocio`;
+  - `visita_precios`;
+  - `demo_visible`, `demo_cambio_plan` y `demo_pantalla_completa`;
+  - `demo_qr_escaneado`: nueva página puente **`qr.html?plan=<id>`**. El QR apunta ahí, se registra el escaneo y redirige a la demo **sin tocar el código de las demos**.
+- **Prueba A/B del titular**: `config.hero.pruebaAB.activa` (por defecto `false`). Si se activa, cada visitante recibe A o B (guardado en su navegador), el `h1` cambia y la versión viaja en todos los eventos (`version_titular`).
+- **Rendimiento**:
+  - fuentes locales con preload (del Sprint 7);
+  - logo de 320 px;
+  - la entrada del hero pasó a **CSS puro** (`.entrada`, `.entrada-foto`, `.entrada-telefono`);
+  - **GSAP + ScrollTrigger se descargan después de `load` y en idle**, con `menuFastUtil.cargarScript` y versiones fijas en `menuFastUtil.LIBS`;
+  - **la librería del QR solo se descarga cuando la demo está por verse**;
+  - `content-visibility: auto` en las secciones debajo del hero;
+  - sin `backdrop-blur` en las tarjetas de la demo.
+
+### Verificado
+- [x] Eventos en consola durante un recorrido (8 de 8): demo_visible, demo_cambio_plan, demo_pantalla_completa, clic_whatsapp (demo, planes, ejemplos, hero) y visita_precios.
+- [x] `qr.html?plan=pro` registra `demo_qr_escaneado` y redirige a `/demos/pro/index.html`. El QR decodificado con OpenCV = `http://localhost:5500/qr.html?plan=basico`.
+- [x] A/B activado temporalmente → h1 "Haz que tu menú trabaje a favor de tu negocio", `version_titular: "A"` en los eventos. Se revirtió a `activa: false`.
+- [x] Después de los cambios: la demo y el carrito funcionan, las animaciones muestran los 39 bloques al recorrer, reduced-motion no descarga GSAP, sin scroll horizontal (360 y 1440) y 0 áreas táctiles pequeñas.
+- [x] **Lighthouse escritorio**: Rendimiento 98 · Accesibilidad 100 · Buenas prácticas 100 · SEO 100.
+- [ ] **Lighthouse móvil, Rendimiento ≥ 85: NO estable.** Accesibilidad, Buenas prácticas y SEO dan **100 en todas las corridas**. Rendimiento varía entre corridas con el mismo código: 92, 87, 85, 84, 81, 75. El LCP está bien (2,8–3,4 s, es el titular) y el CLS = 0. Lo que varía es el **TBT (20–740 ms)**, casi todo "Style & Layout" de la propia página (tareas largas de 200–760 ms).
+  - Experimento: sin las animaciones CSS del hero dio 74 y 91 en dos corridas. **El ruido de medición en esta máquina es mayor que el efecto de cada cambio.**
+- [ ] La vista previa real al compartir el enlace (WhatsApp, Facebook) necesita **dominio público**: og:image debe ser una URL absoluta (hay un TODO en el `<head>`).
+
+### Siguiente paso (al retomar)
+1. Medir el rendimiento móvil de forma estable: 5 corridas y usar la **mediana**, con la máquina sin carga, o PageSpeed Insights una vez publicado.
+2. Si sigue < 85, candidatos (en orden):
+   - (a) quitar `backdrop-blur` de las etiquetas flotantes del hero y del header en móvil;
+   - (b) simplificar `trama-puntos` (usa `mask-image`) y la malla de color del hero;
+   - (c) revisar el costo de `bg-clip-text` del titular;
+   - (d) bajar el peso de `inter-latin.woff2` (48 KB) dejando un solo peso.
+3. Cerrar el Sprint 8 (commit "sprint-8: …") y hacer el **Sprint 9**: QA final, revisión de textos, enlaces, `scripts/demos.py verificar`, **README.md** y lista final de TODOs.
+
+### Cómo ver la web localmente
+```
+cd servicios_web
+node scripts/servidor.mjs        # http://localhost:5500 (con gzip, como un hosting)
+./build.sh --watch               # solo si se editan clases o src/*.css
+```
