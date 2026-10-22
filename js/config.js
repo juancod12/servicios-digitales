@@ -98,6 +98,20 @@ window.MENUFAST = {
     },
   ],
 
+  // Tabla comparativa de planes. true = incluido, false = no incluido, texto = detalle.
+  // El precio de la tabla sale de "planes" (no se repite aquí).
+  comparativa: [
+    { caracteristica: 'Productos con nombre, descripción e imagen', basico: true, pro: true, 'pro-admin': true },
+    { caracteristica: 'Imágenes', basico: 'Descriptivas o generadas con IA', pro: 'Fotos originales que tú entregas', 'pro-admin': 'Fotos originales que tú entregas' },
+    { caracteristica: 'Carrito con cuenta estimada', basico: true, pro: true, 'pro-admin': true },
+    { caracteristica: 'Producto en pantalla completa, imagen por imagen', basico: false, pro: true, 'pro-admin': true },
+    { caracteristica: 'Barra de navegación superior por categorías', basico: false, pro: true, 'pro-admin': true },
+    { caracteristica: 'Vista tipo galería con botón "agregar"', basico: false, pro: true, 'pro-admin': true },
+    { caracteristica: 'Panel para agregar, editar y eliminar productos', basico: false, pro: false, 'pro-admin': true },
+    { caracteristica: 'Personalización de colores y logo', basico: true, pro: true, 'pro-admin': true },
+    { caracteristica: 'Pago único, sin mensualidad', basico: true, pro: true, 'pro-admin': true },
+  ],
+
   condiciones: {
     personalizacion:
       'Cada menú se personaliza con los colores, el logo y las especificaciones de tu negocio.',

@@ -167,6 +167,22 @@
       transition-transform duration-500 ease-premium hover:-translate-y-1;
   }
 
+  /* Botón oscuro (secundario sobre fondos claros) */
+  .btn-oscuro {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-pastilla bg-carbon px-6 py-3 font-display font-bold text-blanco
+      transition-[transform,background-color] duration-300 ease-premium hover:-translate-y-0.5 hover:bg-carbon-hondo active:scale-[0.98];
+  }
+
+  /* Tarjetas de planes */
+  .tarjeta-plan {
+    @apply relative flex flex-col gap-0 rounded-[1.75rem] border border-carbon/[0.08] bg-blanco p-7 shadow-capa sm:p-8;
+  }
+  .tarjeta-plan > .btn-cta, .tarjeta-plan > .btn-oscuro { @apply mt-8; }
+  .tarjeta-plan--destacada {
+    @apply border-blanco/10 text-blanco shadow-flotante lg:-my-4 lg:py-12;
+    background-color: var(--color-carbon-hondo);
+  }
+
   /* Navegación */
   .nav-enlace {
     @apply relative inline-flex min-h-11 items-center rounded-pastilla px-4 text-[0.9375rem] font-medium text-gris-claro

@@ -8,7 +8,8 @@
 | 2 — Hero y problema | ✅ Aprobado | 2026-10-22 |
 | 3 — Demo interactiva | ✅ Aprobado | 2026-10-22 |
 | 4 — Beneficios y ejemplos | ✅ Terminado | 2026-10-22 |
-| 5 — Planes y precios | ⏳ Pendiente | |
+| 5 — Planes y precios | ✅ Terminado | 2026-10-22 |
+| 6 — Confianza, FAQ y cierre | ⏳ Pendiente | |
 
 ---
 
@@ -309,3 +310,23 @@ servicios_web/
 - [x] Ningún beneficio promete una función que el plan no incluye: "Actualizable" aclara que la autogestión es del Pro + Panel Admin, y WhatsApp va "según el plan".
 - [x] Cuadrícula de ejemplos: **1 columna en 360, 2 en 768 y 4 en 1280** (medido con `gridTemplateColumns`). Sin scroll horizontal.
 - [x] Las imágenes de ejemplos y beneficios tienen `alt`, `width`, `height` y `loading="lazy"`.
+
+---
+
+## SPRINT 5 — Planes y precios
+
+### Qué se hizo
+- **3 tarjetas generadas desde `config.planes`** (`js/secciones.js`): nombre, precio en formato colombiano (`$100.000`, con `toLocaleString('es-CO')`) + "COP", pastilla "Pago único", características, nota del plan y botón **"Quiero este plan"** → WhatsApp con "…Me interesa el plan <nombre>".
+  - Básico: **"Desde $100.000"** + nota "El precio varía según la cantidad de productos y si hay que generar las imágenes."
+  - Pro: **destacado como "Recomendado"** (tarjeta oscura con malla de color, más alta en escritorio y CTA coral) + nota "Tú nos das las fotos de tus productos." No dice "el más vendido" ni nada parecido.
+  - **Tiempo de entrega y mantenimiento**: las tarjetas los muestran **solo cuando el valor en config.js no empieza por "TODO:"**. Hoy están pendientes y no se muestran. Al llenarlos aparecen solos.
+- **Nota general** (desde `config.condiciones`): personalización de colores, logo y especificaciones; el software adicional se cotiza aparte.
+- **Cómo contratar**: los 4 pasos de `config.pasosContratacion`, numerados.
+- **Tabla comparativa** desde `config.comparativa` + fila de precio calculada desde `config.planes`. Usa `<caption>`, `scope` en los encabezados y textos para lector de pantalla ("Incluido" / "No incluido"). En móvil se desplaza dentro de su propio recuadro (`overflow-x-auto`, enfocable con teclado) con la indicación "Desliza la tabla…".
+- Arreglo general: al entrar con un `#ancla` (por ejemplo `/#planes`), el contenido que genera JS movía la página. Ahora se vuelve a ubicar el ancla después de generar las secciones.
+
+### Verificación Sprint 5
+- [x] Se cambió el precio del Pro en config.js a 145000 → la tarjeta, la tabla **y la tarjeta de la demo** mostraron `$145.000`. Luego se revirtió.
+- [x] Precios iguales al docx: Básico "Desde $100.000", Pro $130.000, Pro + Panel Admin $250.000 (tarjetas y tabla).
+- [x] Los TODO de tiempos y mantenimiento están en la lista de pendientes (ver el resumen final). En la web no se muestran mientras sigan pendientes.
+- [x] La tabla se desplaza dentro de su recuadro en 360 px y la página no tiene scroll horizontal. En 1280 px cabe completa.
