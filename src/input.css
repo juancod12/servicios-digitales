@@ -133,6 +133,21 @@
     @apply relative h-28 overflow-hidden rounded-2xl border border-carbon/[0.06] bg-crema p-4;
   }
 
+  /* Tarjeta de vidrio sobre fondo oscuro */
+  .tarjeta-vidrio {
+    @apply rounded-tarjeta border border-blanco/10 bg-blanco/[0.04] p-6 backdrop-blur-md sm:p-7;
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-blanco) 6%, transparent);
+  }
+
+  /* Pestañas de la demo */
+  .pestana {
+    @apply min-h-11 shrink-0 whitespace-nowrap rounded-pastilla px-5 font-display text-[0.9375rem] font-bold text-gris-claro
+      transition-[background-color,color,box-shadow] duration-300 ease-premium hover:text-blanco;
+  }
+  .pestana[aria-selected="true"] {
+    @apply bg-coral text-carbon shadow-cta;
+  }
+
   /* Navegación */
   .nav-enlace {
     @apply relative inline-flex min-h-11 items-center rounded-pastilla px-4 text-[0.9375rem] font-medium text-gris-claro

@@ -5,8 +5,9 @@
 |---|---|---|
 | 0 — Reconocimiento y diagnóstico | ✅ Aprobado | 2026-10-22 |
 | 1 — Base e identidad visual | ✅ Aprobado | 2026-10-22 |
-| 2 — Hero y problema | ✅ Terminado, **esperando revisión** | 2026-10-22 |
-| 3 — Demo interactiva | ⏳ Pendiente | |
+| 2 — Hero y problema | ✅ Aprobado | 2026-10-22 |
+| 3 — Demo interactiva | ✅ Terminado, **esperando revisión** | 2026-10-22 |
+| 4 — Beneficios y ejemplos | ⏳ Pendiente | |
 
 ---
 
@@ -251,4 +252,40 @@ servicios_web/
 - [x] Todas las imágenes tienen `alt`, `width` y `height`. `loading="lazy"` en todas menos las del hero.
 - [x] Un solo `h1`; sin scroll horizontal en 360, 390, 768 y 1280; sin errores de consola ni 4xx (comprobado con `scripts/captura.mjs`).
 
->>> PAUSA: esperando revisión para iniciar el Sprint 3.
+>>> Aprobado ("continua").
+
+---
+
+## SPRINT 3 — Demo interactiva en mini teléfono
+
+### Qué se hizo
+- **`demos/basico/`** (desde `Menu_Basico`) y **`demos/pro/`** (desde `Menu_Galeria`, incluidos sus cambios sin commitear, que son el menú Pro real). Se generan con `python scripts/demos.py copiar`:
+  - El código (html, css, js, md) se copia **byte a byte**. Solo se optimizan las imágenes, con los mismos nombres y formatos: máximo 900 px, JPEG con calidad 78 y PNG con paleta de 256 colores que conserva la transparencia. Resultado: **33,4 MB → 17,2 MB** por demo.
+  - `python scripts/demos.py verificar` compara el código copiado con el original.
+- **Sección `#demo`** (fondo oscuro con malla de color):
+  - Pestañas `role="tablist"` generadas desde `config.planes`, **solo para los planes con `demo`**: hoy aparecen Básico y Pro, y Pro + Admin no aparece. Se manejan con flechas, Inicio y Fin.
+  - Mini teléfono (`.telefono`, CSS puro) con un `<iframe>` que se renderiza a 390 px de ancho y se escala con `transform: scale()` según el ancho del marco (ResizeObserver). El alto se ajusta para llenar la pantalla.
+  - Transición GSAP 3.12.5 (cdnjs, versión fija) al cambiar de plan: el iframe se desvanece y la tarjeta de información entra. Con `prefers-reduced-motion` no se anima.
+  - Tarjeta "Estás viendo: …" con precio, características y nota desde config.js, más el botón "Quiero este plan" → WhatsApp con el plan.
+  - **QR** con qrcode-generator 1.4.4 (cdnjs), dibujado como SVG propio (`currentColor`) y apuntando a la demo activa.
+  - "Ver en pantalla completa" abre la demo en una pestaña nueva.
+  - **Carga diferida**: el iframe solo pide la demo cuando la sección está a 200 px de verse (IntersectionObserver).
+  - **Fallback**: si la demo responde con error (comprobación con HEAD) o no carga en 10 s, se muestra la captura del plan (`captura` en config.js) con el botón "Abrir la demo".
+  - Ganchos de medición (`demo_visible`, `demo_cambio_plan`, `demo_pantalla_completa`) llaman a `window.menuFastTrack` si existe (se implementa en el Sprint 8).
+
+### Hallazgos
+- **Carrito compartido entre demos**: las dos usan la clave `menu_digital_cuenta_v1` en el mismo dominio, así que un producto agregado en Básico aparece en Pro. Como los productos son los mismos, no se ve raro. Arreglarlo exige cambiar el código de las demos (regla 5), así que **queda como está**.
+- **QR en desarrollo**: apunta a la URL actual. Abierta como `localhost`, un celular no la puede abrir. Para probar con un celular en la misma red Wi-Fi, abre la web en el PC como `http://<IP-del-PC>:5500/` y el QR usará esa IP. **TODO**: llenar `urlPublica` en config.js cuando haya dominio.
+
+### Verificación Sprint 3
+- [x] Los 2 menús existentes cargan dentro del mini teléfono (escala 0,78 en escritorio y 0,74 en 360 px). Pro + Admin no tiene demo y su pestaña no aparece.
+- [x] Los originales **no se modificaron**: `scripts/demos.py verificar` = OK (código idéntico byte a byte), y `git status` de Menu_Basico y Menu_Galeria muestra los mismos 20 y 23 cambios que había antes del proyecto, ninguno hecho aquí.
+- [x] Navegación y carrito dentro del iframe:
+  - Básico: abrir "Bocadillo Frío" → agregar → "1 producto / 3,30 €".
+  - Pro: cambiar de pestaña → navegar a "Hamburguesas" → agregar desde la galería (badge 2) → el visor de pantalla completa se abre.
+- [x] El QR se **decodificó con OpenCV** y da exactamente la URL de la demo activa (Básico y Pro). Falta la prueba física con un celular, que necesita una URL pública o la IP de la red local (ver arriba).
+- [x] Sin errores de consola ni rutas rotas dentro de las demos. Los únicos `ERR_ABORTED` aparecen al cambiar de pestaña a mitad de carga, como es esperado.
+- [x] Funciona en Chrome escritorio (1280) y en emulación móvil (360 y 390, `mobile: true`, DPR 2). Sin scroll horizontal.
+- [x] Fallback probado con una demo inexistente: aparece la captura con el botón y el iframe queda oculto.
+
+>>> PAUSA: esperando revisión para iniciar el Sprint 4.

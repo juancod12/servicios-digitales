@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0b0c">
+<title>Menú Digital</title>
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="splash" class="splash">
+  <div class="splash__bg" style="background-image:url('assets/inicio.png')"></div>
+  <div class="splash__overlay"></div>
+  <div class="splash__content">
+    <img src="assets/logo.png" alt="Logo" class="splash__logo">
+    <p class="splash__text">Preparando tu carta…</p>
+  </div>
+</div>
+
+<div id="app" class="app" hidden>
+  <!-- BARRA SUPERIOR: logo + cuenta + iconos de categorías (cuadrícula 6x2, sin scroll lateral) -->
+  <header class="topbar" id="topbar">
+    <div class="topbar__head">
+      <img src="assets/logo.png" alt="Logo" class="topbar__logo">
+      <h1 class="topbar__title">Nuestra Carta</h1>
+      <button id="btn-cart" class="topbar__cart" aria-label="Ver mi cuenta">
+        🧾<span id="cart-badge" class="topbar__badge" hidden>0</span>
+      </button>
+    </div>
+    <nav id="nav" class="nav" aria-label="Categorías"></nav>
+  </header>
+
+  <main class="gallery-wrap">
+    <div class="gallery-head">
+      <h2 id="cat-title" class="gallery-head__title"></h2>
+      <span id="cat-count" class="gallery-head__count"></span>
+    </div>
+    <input id="cat-search" class="search" type="search" placeholder="Buscar…" autocomplete="off">
+    <div id="gallery" class="gallery"></div>
+    <footer class="foot">Precios con IVA incluido · La cuenta es orientativa</footer>
+  </main>
+</div>
+
+<!-- barra de total (solo con productos) -->
+<button id="bar-total" class="bar-total" hidden>
+  <span id="bar-count">0 productos</span>
+  <strong id="bar-sum">0,00 €</strong>
+  <span>Ver cuenta ▲</span>
+</button>
+
+<!-- GALERÍA DE PRODUCTO (pantalla completa, se desliza) -->
+<div id="viewer" class="viewer" role="dialog" aria-modal="true" aria-label="Galería de productos" hidden>
+  <div class="viewer__top">
+    <span id="viewer-counter" class="viewer__counter"></span>
+    <button id="viewer-cart" class="viewer__cart" aria-label="Ver mi cuenta">🧾<span id="viewer-badge" class="topbar__badge" hidden>0</span></button>
+    <button id="viewer-close" class="viewer__close" aria-label="Cerrar">✕</button>
+  </div>
+  <div id="viewer-track" class="viewer__track"></div>
+  <button id="viewer-prev" class="viewer__arrow viewer__arrow--prev" aria-label="Anterior" hidden>‹</button>
+  <button id="viewer-next" class="viewer__arrow viewer__arrow--next" aria-label="Siguiente" hidden>›</button>
+</div>
+
+<!-- CUENTA -->
+<div id="cart-sheet" class="sheet" hidden>
+  <div id="cart-backdrop" class="sheet__backdrop"></div>
+  <div class="sheet__panel">
+    <div class="sheet__header">
+      <h3>Mi Cuenta</h3>
+      <button id="btn-close-cart" class="sheet__close" aria-label="Cerrar">✕</button>
+    </div>
+    <div id="cart-items" class="sheet__items"></div>
+    <div id="cart-empty" class="sheet__empty" hidden>🍽️<br>Todavía no has añadido nada.</div>
+    <div class="sheet__footer">
+      <div class="sheet__total-row"><span>Total</span><span id="sheet-total">0,00 €</span></div>
+      <p class="sheet__note">Cuenta orientativa para el camarero · no es un pedido online</p>
+      <button id="btn-clear-cart" class="sheet__clear">Vaciar cuenta</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="js/data.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

@@ -54,6 +54,7 @@ window.MENUFAST = {
       pagoUnico: true,
       recomendado: false,
       demo: 'demos/basico/index.html',
+      captura: 'assets/img/capturas/basico-categoria-780.webp', // fallback si la demo no carga
       caracteristicas: [
         'Lista de productos con nombre, descripción e imagen',
         'Imágenes descriptivas (no originales) o generadas con IA',
@@ -70,6 +71,7 @@ window.MENUFAST = {
       pagoUnico: true,
       recomendado: true,
       demo: 'demos/pro/index.html',
+      captura: 'assets/img/capturas/pro-inicio-780.webp',
       caracteristicas: [
         'Tus productos originales en pantalla completa, imagen por imagen',
         'Barra de navegación superior por categorías',
