@@ -12,7 +12,7 @@
 | 6 — Confianza, FAQ y cierre | ✅ Terminado | 2026-10-22 |
 | 7 — Animaciones, responsive y accesibilidad | ✅ Terminado | 2026-10-22 |
 | 8 — Rendimiento, SEO y medición | ✅ Terminado | 2026-10-24 |
-| 9 — QA final y entrega | ⏳ Pendiente | |
+| 9 — QA final y entrega | ✅ Terminado | 2026-10-24 |
 
 ---
 
@@ -437,6 +437,56 @@ servicios_web/
 - [x] Los eventos aparecen en consola.
 - [~] Vista previa al compartir: las etiquetas OG y la imagen están listas. **Falta el dominio público** para que la og:image sea absoluta (es un TODO del humano, ver lista final).
 - Los candidatos (b), (c) y (d) no hicieron falta.
+
+---
+
+## SPRINT 9 — QA final y entrega
+
+### 9.1 Recorrido (automatizado con CDP, en 360, 390, 768 y 1440 px, más reduced-motion)
+- El script baja por toda la página, cambia las pestañas de la demo, abre las preguntas y revisa enlaces, imágenes e iframes.
+- **0 errores y 0 excepciones en consola**.
+- 0 enlaces rotos, 0 anclas rotas y sin scroll horizontal en ningún ancho.
+- `qr.html?plan=pro` → registra `demo_qr_escaneado` y redirige a `demos/pro/index.html`.
+- Fricción encontrada: ninguna que bloquee.
+- Ruido del registro: Chrome marca como `ERR_ABORTED` los `fetch` `HEAD` que comprueban si existe la demo, aunque respondan 200 y la página reciba el resultado (el 404 sí se detecta). Pasa con o sin gzip. No es un error y no sale en la consola.
+
+### 9.2 Textos
+- Se leyó todo el texto visible (con `content-visibility` desactivado para extraerlo).
+- Ortografía y tildes correctas, tono cercano, sin "lorem ipsum" y sin `TODO` visibles.
+- Precios iguales a los del docx: Básico **desde $100.000**, Pro **$130.000** y Pro + Panel Admin **$250.000**, todos con pago único.
+- ⚠️ **Promesa por confirmar**: el hero ("Botón de WhatsApp, según el plan") y el beneficio "Contacto por WhatsApp — Según el plan contratado" vienen de la parte B del docx. Pero **ningún plan de la parte A ni ninguna demo incluye un botón de WhatsApp para el cliente final**. Se dejó el texto tal como está en el docx. Ver TODO 1.
+
+### 9.3 Enlaces y demos
+- [x] 18 botones de WhatsApp → `wa.me/573044168961` con el mensaje correcto según el origen:
+  - genérico: header, menú móvil, hero, cierre, flotante y footer;
+  - con el plan: planes y demo;
+  - con el tipo de negocio: los 8 ejemplos y el selector del cierre.
+- [x] `python scripts/demos.py verificar` → **el código de las demos es idéntico al original**.
+- Instagram: `https://www.instagram.com/davidvar2014/` (externo, no se comprobó).
+
+### 9.4 Lista final de TODOs (para el humano)
+| # | Pendiente | Dónde se completa |
+|---|---|---|
+| 1 | **¿Qué plan incluye el botón de WhatsApp en el menú del cliente?** Si ninguno, quitar el ítem del hero y el beneficio 6 | `index.html` (hero y beneficios) y `config.js` (características) |
+| 2 | Tiempo de entrega de cada plan (con esto aparece la pregunta "¿Cuánto tarda la entrega?") | `config.js` → `planes[i].tiempoEntrega` y `preguntas` |
+| 3 | Condiciones de mantenimiento y de cambios después de la entrega | `config.js` → `condiciones` y `preguntas` |
+| 4 | Dominio y hosting, más canonical, og:url y og:image absolutas, sitemap y `urlPublica` (para los QR). Sin esto **no hay vista previa al compartir** | README §6 "Al tener dominio" |
+| 5 | Herramienta de analítica (GA4 u otra) | README §5 |
+| 6 | Correo de contacto (opcional) | `config.js` → `contacto.correo` |
+| 7 | Testimonios reales, cuando existan | `config.js` → `testimonios` |
+| 8 | Demo del plan Pro + Panel Admin (hoy no tiene pestaña) | README §4 |
+| 9 | Confirmar los pasos de contratación (aprobados de forma provisional) | `config.js` → `pasosContratacion` |
+| 10 | Medir con PageSpeed Insights una vez publicado | — |
+
+### 9.5 README.md
+- Cubre: cómo abrir el proyecto, la estructura, cómo editar `config.js` (tabla de campos), cómo recompilar el CSS (Tailwind v4 standalone en `tools/`, que no está en git), cómo agregar una demo, la medición, GA4, la prueba A/B, cómo publicar en Netlify, Vercel o GitHub Pages, y el checklist para cuando haya dominio.
+
+### Verificación Sprint 9 (checklist de cierre)
+- [x] Cero errores en consola.
+- [x] Todos los botones de WhatsApp abren con el mensaje correcto.
+- [x] Las demos funcionan en el mini teléfono (pestañas, iframe y QR) y en pantalla completa (enlace a `demos/<id>/index.html`, comprobado con 200).
+- [x] Precios iguales al docx.
+- [x] README.md y PROGRESO.md completos.
 
 ### Cómo ver la web localmente
 ```
