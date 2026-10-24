@@ -11,7 +11,7 @@
 | 5 — Planes y precios | ✅ Terminado | 2026-10-22 |
 | 6 — Confianza, FAQ y cierre | ✅ Terminado | 2026-10-22 |
 | 7 — Animaciones, responsive y accesibilidad | ✅ Terminado | 2026-10-22 |
-| 8 — Rendimiento, SEO y medición | 🟡 **En curso (pausado a pedido del humano)** | 2026-10-22 |
+| 8 — Rendimiento, SEO y medición | ✅ Terminado | 2026-10-24 |
 | 9 — QA final y entrega | ⏳ Pendiente | |
 
 ---
@@ -389,9 +389,9 @@ servicios_web/
 
 ---
 
-## SPRINT 8 — Rendimiento, SEO y medición  🟡 EN CURSO (pausado)
+## SPRINT 8 — Rendimiento, SEO y medición
 
-> El humano pidió detener el trabajo aquí, documentar y guardar. **Para retomar: leer esta sección y "Siguiente paso".**
+> Se pausó el 2026-10-22 a pedido del humano y se retomó y cerró el 2026-10-24.
 
 ### Hecho
 - **SEO**:
@@ -425,14 +425,18 @@ servicios_web/
   - Experimento: sin las animaciones CSS del hero dio 74 y 91 en dos corridas. **El ruido de medición en esta máquina es mayor que el efecto de cada cambio.**
 - [ ] La vista previa real al compartir el enlace (WhatsApp, Facebook) necesita **dominio público**: og:image debe ser una URL absoluta (hay un TODO en el `<head>`).
 
-### Siguiente paso (al retomar)
-1. Medir el rendimiento móvil de forma estable: 5 corridas y usar la **mediana**, con la máquina sin carga, o PageSpeed Insights una vez publicado.
-2. Si sigue < 85, candidatos (en orden):
-   - (a) quitar `backdrop-blur` de las etiquetas flotantes del hero y del header en móvil;
-   - (b) simplificar `trama-puntos` (usa `mask-image`) y la malla de color del hero;
-   - (c) revisar el costo de `bg-clip-text` del titular;
-   - (d) bajar el peso de `inter-latin.woff2` (48 KB) dejando un solo peso.
-3. Cerrar el Sprint 8 (commit "sprint-8: …") y hacer el **Sprint 9**: QA final, revisión de textos, enlaces, `scripts/demos.py verificar`, **README.md** y lista final de TODOs.
+### Cierre (2026-10-24)
+- Medición estable: 5 corridas de Lighthouse 12.2.1 móvil y se toma la **mediana**.
+  - **Antes del cambio**: 95, 86, 88, 82, 88 → mediana **88**.
+- Para tener más margen se aplicó el candidato (a): **en móvil, `.vidrio-oscuro` y `.chip-vidrio` ya no usan `backdrop-filter`** (fondo `carbon/90`, más opaco). El blur se mantiene desde `md` (768 px).
+  - **Después**: 89, 89, 90, 89, 89 → mediana **89**, con un TBT de 130–200 ms. Antes llegaba a 330 ms.
+  - Los resultados quedaron mucho más estables.
+- Escritorio después del cambio: Rendimiento 97 · Accesibilidad 100 · Buenas prácticas 100 · SEO 100.
+- Captura del hero en 390 px: se ve igual y no hay errores en consola.
+- [x] **Lighthouse móvil, Rendimiento ≥ 85 (mediana 89)**, SEO 100 y Buenas prácticas 100.
+- [x] Los eventos aparecen en consola.
+- [~] Vista previa al compartir: las etiquetas OG y la imagen están listas. **Falta el dominio público** para que la og:image sea absoluta (es un TODO del humano, ver lista final).
+- Los candidatos (b), (c) y (d) no hicieron falta.
 
 ### Cómo ver la web localmente
 ```

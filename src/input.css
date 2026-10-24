@@ -71,9 +71,9 @@
   }
   .btn-cta:hover { box-shadow: var(--shadow-cta-hover); }
 
-  /* Superficie de vidrio sobre fondos oscuros */
+  /* Superficie de vidrio sobre fondos oscuros (sin blur en móvil: costo de pintado) */
   .vidrio-oscuro {
-    @apply border border-blanco/10 bg-carbon/70 backdrop-blur-xl backdrop-saturate-150;
+    @apply border border-blanco/10 bg-carbon/90 md:bg-carbon/70 md:backdrop-blur-xl md:backdrop-saturate-150;
   }
 
   /* Malla de color (mesh gradient) sobre carbón */
@@ -139,7 +139,7 @@
 
   /* Etiqueta flotante de vidrio */
   .chip-vidrio {
-    @apply border border-blanco/10 bg-carbon/70 backdrop-blur-xl backdrop-saturate-150 inline-flex items-center gap-2 rounded-pastilla px-3.5 py-2 text-sm font-semibold text-blanco shadow-flotante;
+    @apply border border-blanco/10 bg-carbon/90 md:bg-carbon/70 md:backdrop-blur-xl md:backdrop-saturate-150 inline-flex items-center gap-2 rounded-pastilla px-3.5 py-2 text-sm font-semibold text-blanco shadow-flotante;
   }
 
   /* Enlace con flecha sobre fondo claro */
